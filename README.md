@@ -96,7 +96,7 @@ JabuDine/
 ### Software Requirements
 - Python 3.8+
 - Kivy and KivyMD
-- Flask
+- Flask (or Django)
 - SQLite
 - Buildozer (for Android APKs)
 - Xcode (for iOS builds)
@@ -104,7 +104,7 @@ JabuDine/
 ### Installation Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/jabudine.git
+   git clone https://github.com/edwinabdonshayo/jabudine.git
    cd jabudine
    ```
 2. Install dependencies:
