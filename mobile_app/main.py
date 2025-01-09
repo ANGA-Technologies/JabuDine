@@ -10,7 +10,7 @@ class Main(MDApp):
 
     def on_start(self):
         def on_start(*args):
-            self.root.md_bg_color = self.theme_cls.backgroundColor  # Corrected property for background color
+            self.root.md_bg_color = self.root.md_bg_color = [1, 1, 1, 1]
 
         Clock.schedule_once(on_start)
 
