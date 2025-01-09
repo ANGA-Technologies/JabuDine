@@ -1,12 +1,38 @@
 from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import Color, Line
 from kivy.metrics import dp
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
+from kivymd.uix.fitimage import FitImage
 # from kivymd.uix.appbar import MDTopAppBar
 from kivy.utils import get_color_from_hex
 
+class BorderedMDCard(MDCard):
+    def __init__(self, border_width=dp(2), border_color="#FF0000", **kwargs):
+        super().__init__(**kwargs)
+        self.border_width = border_width
+        self.border_color = border_color
+
+        # Draw the border after the background is drawn
+        with self.canvas.after:
+            Color(*get_color_from_hex(self.border_color))
+            self.border_line = Line(width=self.border_width)
+
+        # Keep the border updated if size or position changes
+        self.bind(pos=self._update_border, size=self._update_border)
+
+    def _update_border(self, *args):
+        # For a rounded rectangle, we need (x, y, width, height, radius_top_left, ...)
+        # We'll just unpack `self.radius`, which should contain 4 values.
+        self.border_line.rounded_rectangle = (
+            self.x,
+            self.y,
+            self.width,
+            self.height,
+            *self.radius
+        )
 
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -36,6 +62,7 @@ class HomeScreen(MDScreen):
                 pos_hint={"center_x": 0.5, "center_y": 0.7},
             )
         ) 
+    
         
 
         # Subtitle Label
@@ -83,22 +110,58 @@ class HomeScreen(MDScreen):
         layout.add_widget(buttons_layout)
 
         # Bottom Navigation Bar
-        nav_bar = MDCard(
+        nav_bar = BorderedMDCard(
             orientation="horizontal",
             size_hint=(0.97, None),
             height=dp(60),
-            md_bg_color=get_color_from_hex("#E52100"),
+            md_bg_color=get_color_from_hex("#D9D9D94d"),
             pos_hint={"center_x": 0.5, "y": 0.01},
             padding=[dp(10), dp(10), dp(10), dp(10)],
             spacing=dp(10),
             radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
+            border_width=dp(1.2),
+            border_color="#D9D9D9",
         )
 
         # Navigation Icons (using placeholders for simplicity)
-        nav_bar.add_widget(MDLabel(text="🏠", halign="center"))
-        nav_bar.add_widget(MDLabel(text="🍴", halign="center"))
-        nav_bar.add_widget(MDLabel(text="🔔", halign="center"))
-        nav_bar.add_widget(MDLabel(text="👤", halign="center"))
+        # nav_bar.add_widget(MDLabel(text="🏠", halign="center"))
+        # nav_bar.add_widget(MDLabel(text="🍴", halign="center"))
+        # nav_bar.add_widget(MDLabel(text="🔔", halign="center"))
+        # nav_bar.add_widget(MDLabel(text="👤", halign="center"))
+
+                # Navigation Icons
+        nav_bar.add_widget(
+            FitImage(
+                source="assets/icons/home.png",
+                # fit_mode="cover",  # or "contain", "fill_width", etc.
+                size_hint=(None, None),
+                size=(dp(32), dp(32))
+            )
+        )
+        nav_bar.add_widget(
+            FitImage(
+                source="assets/icons/menu.png",
+                # fit_mode="cover",
+                size_hint=(None, None),
+                size=(dp(32), dp(32))
+            )
+        )
+        nav_bar.add_widget(
+            FitImage(
+                source="assets/icons/notification.png",
+                # fit_mode="cover",
+                size_hint=(None, None),
+                size=(dp(32), dp(32))
+            )
+        )
+        nav_bar.add_widget(
+            FitImage(
+                source="assets/icons/account.png",
+                # fit_mode="cover",
+                size_hint=(None, None),
+                size=(dp(32), dp(32))
+            )
+        )
 
         layout.add_widget(nav_bar)
 
