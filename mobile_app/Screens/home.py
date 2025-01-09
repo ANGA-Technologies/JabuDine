@@ -1,7 +1,9 @@
 from kivy.uix.floatlayout import FloatLayout
+from kivy.metrics import dp
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.card import MDCard
 # from kivymd.uix.appbar import MDTopAppBar
 from kivy.utils import get_color_from_hex
 
@@ -33,7 +35,8 @@ class HomeScreen(MDScreen):
                 text_color=get_color_from_hex("#30016D"),  # Purple color
                 pos_hint={"center_x": 0.5, "center_y": 0.7},
             )
-        )
+        ) 
+        
 
         # Subtitle Label
         layout.add_widget(
@@ -80,12 +83,15 @@ class HomeScreen(MDScreen):
         layout.add_widget(buttons_layout)
 
         # Bottom Navigation Bar
-        nav_bar = MDBoxLayout(
+        nav_bar = MDCard(
             orientation="horizontal",
-            size_hint=(1, None),
-            height=60,
-            md_bg_color=get_color_from_hex("#E59400"),  # Orange background
-            pos_hint={"center_x": 0.5, "y": 0},
+            size_hint=(0.97, None),
+            height=dp(60),
+            md_bg_color=get_color_from_hex("#E52100"),
+            pos_hint={"center_x": 0.5, "y": 0.01},
+            padding=[dp(10), dp(10), dp(10), dp(10)],
+            spacing=dp(10),
+            radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
         )
 
         # Navigation Icons (using placeholders for simplicity)
