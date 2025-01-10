@@ -83,36 +83,67 @@ class HomeScreen(MDScreen):
         buttons_layout = MDBoxLayout(
             orientation="horizontal",
             spacing=20,
-            size_hint=(1, 1), 
-            size=(320, 50),  
+            size_hint=(None, None),
+            size=(360, 50),
             pos_hint={"center_x": 0.5, "center_y": 0.5},
         )
 
-        # Order Button
-        buttons_layout.add_widget(
-            MDRaisedButton(
-                text="Order",
-                theme_text_color="Custom",
-                text_color=get_color_from_hex("#800080"),
-                md_bg_color=get_color_from_hex("#f5f5f5"),
-                size_hint=(None, None),
-                # size=(140, 50),
-            )
+        # Spacer Widget to center buttons
+        buttons_layout.add_widget(Widget(size_hint_x=1))  # Left spacer
+
+
+        # Order Button with MDCard for Rounded Corners
+        order_button_card = MDCard(
+            radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
+            size_hint=(None, None),
+            size=(140, 50),  # Size of the card
+            md_bg_color=get_color_from_hex("#f5f5f5"),
+            ripple_behavior=True,  # Enable ripple effect
+            elevation=4,  # Optional shadow effect
         )
 
-        # Reserve Button
-        buttons_layout.add_widget(
-            MDRaisedButton(
-                text="Reserve",
-                theme_text_color="Custom",
-                text_color=get_color_from_hex("#800080"),
-                md_bg_color=get_color_from_hex("#f5f5f5"),
-                size_hint=(None, None),
-                # size=(140, 50),
-            )
+        # Add the actual button inside the MDCard
+        order_button = MDRaisedButton(
+            text="Order",
+            theme_text_color="Custom",
+            text_color=get_color_from_hex("#800080"),
+            md_bg_color=get_color_from_hex("#f5f5f5"),
+            size_hint=(None, None),
+            size=(140, 50),
+        )
+        order_button_card.add_widget(order_button)
+
+        # Reserve Button with MDCard for Rounded Corners
+        reserve_button_card = MDCard(
+            radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
+            size_hint=(None, None),
+            size=(140, 50),
+            md_bg_color=get_color_from_hex("#f5f5f5"),
+            ripple_behavior=True,
+            elevation=4,
         )
 
+        # Add the actual button inside the MDCard
+        reserve_button = MDRaisedButton(
+            text="Reserve",
+            theme_text_color="Custom",
+            text_color=get_color_from_hex("#800080"),
+            md_bg_color=get_color_from_hex("#f5f5f5"),
+            size_hint=(None, None),
+            size=(140, 50),
+        )
+        reserve_button_card.add_widget(reserve_button)
+
+        # Add cards to the layout
+        buttons_layout.add_widget(order_button_card)
+        buttons_layout.add_widget(reserve_button_card)
+
+        # Spacer Widget to center buttons
+        buttons_layout.add_widget(Widget(size_hint_x=1))  # Right spacer
+
+        # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
+
 
         # Bottom Navigation Bar
         nav_bar = BorderedMDCard(
