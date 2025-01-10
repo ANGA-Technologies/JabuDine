@@ -6,6 +6,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.fitimage import FitImage
+from kivy.uix.widget import Widget
+
 # from kivymd.uix.appbar import MDTopAppBar
 from kivy.utils import get_color_from_hex
 
@@ -117,53 +119,36 @@ class HomeScreen(MDScreen):
             md_bg_color=get_color_from_hex("#D9D9D94d"),
             pos_hint={"center_x": 0.5, "y": 0.01},
             padding=[dp(10), dp(10), dp(10), dp(10)],
-            spacing=dp(10),
             radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
             border_width=dp(1.2),
             border_color="#D9D9D9",
         )
 
-        # Navigation Icons (using placeholders for simplicity)
-        # nav_bar.add_widget(MDLabel(text="🏠", halign="center"))
-        # nav_bar.add_widget(MDLabel(text="🍴", halign="center"))
-        # nav_bar.add_widget(MDLabel(text="🔔", halign="center"))
-        # nav_bar.add_widget(MDLabel(text="👤", halign="center"))
+        # Use a BoxLayout for dynamic spacing
+        icons_layout = MDBoxLayout(
+            orientation="horizontal",
+            size_hint=(1, 1)  # Full width to allow dynamic spacing
+        )
 
-                # Navigation Icons
-        nav_bar.add_widget(
-            FitImage(
-                source="assets/icons/home.png",
-                # fit_mode="cover",  # or "contain", "fill_width", etc.
+        # Add icons with dynamic spacers between them
+        icon_sources = ["home.png", "menu.png", "notification.png", "account.png"]
+        for index, icon in enumerate(icon_sources):
+            if index > 0:
+                # Add a spacer widget between icons
+                icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
+
+            icons_layout.add_widget(FitImage(
+                source=f"assets/icons/{icon}",
                 size_hint=(None, None),
-                size=(dp(32), dp(32))
-            )
-        )
-        nav_bar.add_widget(
-            FitImage(
-                source="assets/icons/menu.png",
-                # fit_mode="cover",
-                size_hint=(None, None),
-                size=(dp(32), dp(32))
-            )
-        )
-        nav_bar.add_widget(
-            FitImage(
-                source="assets/icons/notification.png",
-                # fit_mode="cover",
-                size_hint=(None, None),
-                size=(dp(32), dp(32))
-            )
-        )
-        nav_bar.add_widget(
-            FitImage(
-                source="assets/icons/account.png",
-                # fit_mode="cover",
-                size_hint=(None, None),
-                size=(dp(32), dp(32))
-            )
-        )
+                size=(dp(32), dp(32))  # Fixed size for icons
+            ))
+
+        # Add the dynamic icon layout to the navigation bar
+        nav_bar.add_widget(icons_layout)
 
         layout.add_widget(nav_bar)
+
+
 
         # Add the main layout to the screen
         self.add_widget(layout)
