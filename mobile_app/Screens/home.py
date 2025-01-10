@@ -7,6 +7,8 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.fitimage import FitImage
 from kivy.uix.widget import Widget
+from kivymd.uix.button import MDRaisedButton, MDFlatButton
+
 
 # from kivymd.uix.appbar import MDTopAppBar
 from kivy.utils import get_color_from_hex
@@ -47,7 +49,7 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="Hello, Happy!",
-                font_size="24sp",  # Directly specify the font size
+                font_size="24sp",  
                 halign="center",
                 pos_hint={"center_x": 0.5, "center_y": 0.85},
             )
@@ -57,24 +59,22 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="JabuDine",
-                font_size="32sp",  # Directly specify the font size
+                font_size="32sp",  
                 halign="center",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#30016D"),  # Purple color
+                text_color=get_color_from_hex("#30016D"),
                 pos_hint={"center_x": 0.5, "center_y": 0.7},
             )
-        ) 
-    
-        
+        )
 
         # Subtitle Label
         layout.add_widget(
             MDLabel(
                 text="Your Table, Your Taste, One Tap Away!",
-                font_size="18sp",  # Directly specify the font size
+                font_size="18sp",  
                 halign="center",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#800080"),  # Purple color
+                text_color=get_color_from_hex("#800080"),
                 pos_hint={"center_x": 0.5, "center_y": 0.65},
             )
         )
@@ -83,29 +83,32 @@ class HomeScreen(MDScreen):
         buttons_layout = MDBoxLayout(
             orientation="horizontal",
             spacing=20,
-            size_hint=(None, None),
+            size_hint=(1, 1), 
+            size=(320, 50),  
             pos_hint={"center_x": 0.5, "center_y": 0.5},
-            width=300,
-            height=50,
         )
 
         # Order Button
         buttons_layout.add_widget(
-            MDLabel(
+            MDRaisedButton(
                 text="Order",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#800080"),  # Purple text
-                size_hint=(0.4, None),
+                text_color=get_color_from_hex("#800080"),
+                md_bg_color=get_color_from_hex("#f5f5f5"),
+                size_hint=(None, None),
+                # size=(140, 50),
             )
         )
 
         # Reserve Button
         buttons_layout.add_widget(
-            MDLabel(
+            MDRaisedButton(
                 text="Reserve",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#800080"),  # Purple text
-                size_hint=(0.4, None),
+                text_color=get_color_from_hex("#800080"),
+                md_bg_color=get_color_from_hex("#f5f5f5"),
+                size_hint=(None, None),
+                # size=(140, 50),
             )
         )
 
@@ -147,8 +150,6 @@ class HomeScreen(MDScreen):
         nav_bar.add_widget(icons_layout)
 
         layout.add_widget(nav_bar)
-
-
 
         # Add the main layout to the screen
         self.add_widget(layout)
