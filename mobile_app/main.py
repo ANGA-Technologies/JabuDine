@@ -1,28 +1,12 @@
+from kivy.core.window import Window
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from Screens.home import HomeScreen  # Import from the screens folder
 from kivy.utils import get_color_from_hex
-
 from kivy.graphics import Color, Rectangle
-# from kivymd.app import MDApp
-# from Screens.home import HomeScreen
-import math
 
-# class Main(MDApp):
-#     def build(self):
-#         self.theme_cls.primary_palette = "Orange"
-#         self.theme_cls.theme_style = "Light"
-#         return HomeScreen()
-
-#     def on_start(self):
-#         def on_start(*args):
-#             self.root.md_bg_color = self.root.md_bg_color = get_color_from_hex("#FFFFFF")
-
-#         Clock.schedule_once(on_start)
-
-
-# Main().run()
-
+# Set the window size directly
+Window.size = (360, 640)  # Width and height in pixels
 
 class GradientWidget(HomeScreen):
     def __init__(self, start_color=(1, 1, 1, 1), end_color=(1, 0, 0, 1), steps=50, **kwargs):
