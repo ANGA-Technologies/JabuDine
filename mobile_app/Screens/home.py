@@ -8,7 +8,7 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.fitimage import FitImage
 from kivy.uix.widget import Widget
 # from kivymd.uix.button import MDRaisedButton, MDFlatButton
-from kivymd.uix.button import MDButton, MDButtonText
+from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon
 
 
 # from kivymd.uix.appbar import MDTopAppBar
@@ -94,21 +94,16 @@ class HomeScreen(MDScreen):
 
         # Order Button
         order_button = MDButton(
-            MDButtonText(text="Order Now",),
-            # text="Order",
-            md_bg_color=get_color_from_hex("#f5f5f5"),
-            size_hint=(None, None),
-            size=(140, 50),
-            radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
+            MDButtonText(text="Order",),
         )
 
         # Reserve Button
         reserve_button = MDButton(
-            MDButtonText(text="Reserve"),
-            md_bg_color=get_color_from_hex("#f5f5f5"),
-            size_hint=(None, None),
-            size=(140, 50),
-            radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
+            # self.theme_cls.primary_palette = "Green"
+            MDButtonText(
+                text="Reserve"
+            ),
+            style="filled",
         )
 
         # Add buttons to the layout
@@ -127,7 +122,7 @@ class HomeScreen(MDScreen):
             orientation="horizontal",
             size_hint=(0.97, None),
             height=dp(60),
-            md_bg_color=get_color_from_hex("#D9D9D94d"),
+            # md_bg_color=get_color_from_hex("#8080804d"),
             pos_hint={"center_x": 0.5, "y": 0.01},
             padding=[dp(10), dp(10), dp(10), dp(10)],
             radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
@@ -142,16 +137,22 @@ class HomeScreen(MDScreen):
         )
 
         # Add icons with dynamic spacers between them
-        icon_sources = ["home.png", "menu.png", "notification.png", "account.png"]
+        icon_sources = ["home", "menu", "bell", "account"]
         for index, icon in enumerate(icon_sources):
             if index > 0:
                 # Add a spacer widget between icons
                 icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
 
-            icons_layout.add_widget(FitImage(
-                source=f"assets/icons/{icon}",
+            # icons_layout.add_widget(FitImage(
+            #     source=f"assets/icons/{icon}",
+            #     size_hint=(None, None),
+            #     size=(dp(32), dp(32))  # Fixed size for icons
+            # ))
+            icons_layout.add_widget(MDButton(
+                MDButtonIcon(icon=icon
+                ),
                 size_hint=(None, None),
-                size=(dp(32), dp(32))  # Fixed size for icons
+                size=(dp(32), dp(32))
             ))
 
         # Add the dynamic icon layout to the navigation bar
@@ -160,4 +161,4 @@ class HomeScreen(MDScreen):
         layout.add_widget(nav_bar)
 
         # Add the main layout to the screen
-        self.add_widget(layout)
+        self.add_widget(layout) 
