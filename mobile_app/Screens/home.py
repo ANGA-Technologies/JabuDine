@@ -7,7 +7,8 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.fitimage import FitImage
 from kivy.uix.widget import Widget
-from kivymd.uix.button import MDRaisedButton, MDFlatButton
+# from kivymd.uix.button import MDRaisedButton, MDFlatButton
+from kivymd.uix.button import MDButton, MDButtonText
 
 
 # from kivymd.uix.appbar import MDTopAppBar
@@ -91,52 +92,28 @@ class HomeScreen(MDScreen):
         # Spacer Widget to center buttons
         buttons_layout.add_widget(Widget(size_hint_x=1))  # Left spacer
 
-
-        # Order Button with MDCard for Rounded Corners
-        order_button_card = MDCard(
+        # Order Button
+        order_button = MDButton(
+            MDButtonText(text="Order Now",),
+            # text="Order",
+            md_bg_color=get_color_from_hex("#f5f5f5"),
+            size_hint=(None, None),
+            size=(140, 50),
             radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
-            size_hint=(None, None),
-            size=(140, 50),  # Size of the card
-            md_bg_color=get_color_from_hex("#f5f5f5"),
-            ripple_behavior=True,  # Enable ripple effect
-            elevation=4,  # Optional shadow effect
         )
 
-        # Add the actual button inside the MDCard
-        order_button = MDRaisedButton(
-            text="Order",
-            theme_text_color="Custom",
-            text_color=get_color_from_hex("#800080"),
+        # Reserve Button
+        reserve_button = MDButton(
+            MDButtonText(text="Reserve"),
             md_bg_color=get_color_from_hex("#f5f5f5"),
             size_hint=(None, None),
             size=(140, 50),
-        )
-        order_button_card.add_widget(order_button)
-
-        # Reserve Button with MDCard for Rounded Corners
-        reserve_button_card = MDCard(
             radius=[dp(20), dp(20), dp(20), dp(20)],  # Rounded corners
-            size_hint=(None, None),
-            size=(140, 50),
-            md_bg_color=get_color_from_hex("#f5f5f5"),
-            ripple_behavior=True,
-            elevation=4,
         )
 
-        # Add the actual button inside the MDCard
-        reserve_button = MDRaisedButton(
-            text="Reserve",
-            theme_text_color="Custom",
-            text_color=get_color_from_hex("#800080"),
-            md_bg_color=get_color_from_hex("#f5f5f5"),
-            size_hint=(None, None),
-            size=(140, 50),
-        )
-        reserve_button_card.add_widget(reserve_button)
-
-        # Add cards to the layout
-        buttons_layout.add_widget(order_button_card)
-        buttons_layout.add_widget(reserve_button_card)
+        # Add buttons to the layout
+        buttons_layout.add_widget(order_button)
+        buttons_layout.add_widget(reserve_button)
 
         # Spacer Widget to center buttons
         buttons_layout.add_widget(Widget(size_hint_x=1))  # Right spacer
