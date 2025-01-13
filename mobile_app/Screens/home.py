@@ -71,7 +71,7 @@ class HomeScreen(MDScreen):
         # Subtitle Label
         layout.add_widget(
             MDLabel(
-                text="Your Table, Your Taste, One Tap Away!",
+                text="Your Table, Your Taste!",
                 font_size="18sp",  
                 halign="center",
                 theme_text_color="Custom",
@@ -103,7 +103,7 @@ class HomeScreen(MDScreen):
             MDButtonText(
                 text="Reserve"
             ),
-            style="filled",
+            # style="filled",
         )
 
         # Add buttons to the layout
@@ -124,7 +124,7 @@ class HomeScreen(MDScreen):
             height=dp(60),
             # md_bg_color=get_color_from_hex("#8080804d"),
             pos_hint={"center_x": 0.5, "y": 0.01},
-            padding=[dp(10), dp(10), dp(10), dp(10)],
+            padding=[dp(25), dp(10), dp(25), dp(10)],
             radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
             border_width=dp(1.2),
             border_color="#D9D9D9",
@@ -133,21 +133,29 @@ class HomeScreen(MDScreen):
         # Use a BoxLayout for dynamic spacing
         icons_layout = MDBoxLayout(
             orientation="horizontal",
-            size_hint=(1, 1)  # Full width to allow dynamic spacing
+            size_hint=(1, 1),  # Full width to allow dynamic spacing
+            height=dp(60),  # Optional: Define height explicitly
+            # padding=[dp(10), dp(10)]
         )
 
         # Add icons with dynamic spacers between them
-        icon_sources = ["home", "menu", "bell", "account"]
+        icon_sources = ["home", "silverware-variant", "bell", "account"]
         for index, icon in enumerate(icon_sources):
             if index > 0:
                 # Add a spacer widget between icons
                 icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
 
             icons_layout.add_widget(MDButton(
-                MDButtonIcon(icon=icon
+                MDButtonIcon(
+                    icon=icon,
+                    size_hint=(None, None),
+                    size=(dp(32), dp(32)),
+                    pos_hint={"center_x": 0.5, "center_y": 0.5},
                 ),
+                # style="icon_only",
                 size_hint=(None, None),
-                size=(dp(32), dp(32))
+                size=(dp(32), dp(32)),
+                pos_hint={"center_x": 0.5, "center_y": 0.5}
             ))
 
         # Add the dynamic icon layout to the navigation bar
