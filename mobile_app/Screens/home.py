@@ -143,11 +143,6 @@ class HomeScreen(MDScreen):
                 # Add a spacer widget between icons
                 icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
 
-            # icons_layout.add_widget(FitImage(
-            #     source=f"assets/icons/{icon}",
-            #     size_hint=(None, None),
-            #     size=(dp(32), dp(32))  # Fixed size for icons
-            # ))
             icons_layout.add_widget(MDButton(
                 MDButtonIcon(icon=icon
                 ),
