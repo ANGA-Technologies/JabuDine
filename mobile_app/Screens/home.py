@@ -5,39 +5,11 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
-from kivymd.uix.fitimage import FitImage
-from kivy.uix.widget import Widget
-# from kivymd.uix.button import MDRaisedButton, MDFlatButton
 from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon
-
-
-# from kivymd.uix.appbar import MDTopAppBar
+from kivymd.uix.widget import MDWidget
+from kivy.uix.widget import Widget
 from kivy.utils import get_color_from_hex
 
-class BorderedMDCard(MDCard):
-    def __init__(self, border_width=dp(2), border_color="#FF0000", **kwargs):
-        super().__init__(**kwargs)
-        self.border_width = border_width
-        self.border_color = border_color
-
-        # Draw the border after the background is drawn
-        with self.canvas.after:
-            Color(*get_color_from_hex(self.border_color))
-            self.border_line = Line(width=self.border_width)
-
-        # Keep the border updated if size or position changes
-        self.bind(pos=self._update_border, size=self._update_border)
-
-    def _update_border(self, *args):
-        # For a rounded rectangle, we need (x, y, width, height, radius_top_left, ...)
-        # We'll just unpack `self.radius`, which should contain 4 values.
-        self.border_line.rounded_rectangle = (
-            self.x,
-            self.y,
-            self.width,
-            self.height,
-            *self.radius
-        )
 
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -50,7 +22,7 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="Hello, Happy!",
-                font_size="24sp",  
+                font_size="24sp",
                 halign="center",
                 pos_hint={"center_x": 0.5, "center_y": 0.85},
             )
@@ -60,7 +32,7 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="JabuDine",
-                font_size="32sp",  
+                font_size="32sp",
                 halign="center",
                 theme_text_color="Custom",
                 text_color=get_color_from_hex("#30016D"),
@@ -72,7 +44,7 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="Your Table, Your Taste!",
-                font_size="18sp",  
+                font_size="18sp",
                 halign="center",
                 theme_text_color="Custom",
                 text_color=get_color_from_hex("#800080"),
@@ -94,16 +66,12 @@ class HomeScreen(MDScreen):
 
         # Order Button
         order_button = MDButton(
-            MDButtonText(text="Order",),
+            MDButtonText(text="Order"),
         )
 
         # Reserve Button
         reserve_button = MDButton(
-            # self.theme_cls.primary_palette = "Green"
-            MDButtonText(
-                text="Reserve"
-            ),
-            # style="filled",
+            MDButtonText(text="Reserve"),
         )
 
         # Add buttons to the layout
@@ -116,26 +84,26 @@ class HomeScreen(MDScreen):
         # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
 
-
-        # Bottom Navigation Bar
-        nav_bar = BorderedMDCard(
+        # Bottom Navigation Bar using MDCard
+        nav_bar = MDCard(
+            style="filled",
+            theme_bg_color= "Custom",
+            md_bg_color= get_color_from_hex("#ffffff50"),
             orientation="horizontal",
             size_hint=(0.97, None),
-            height=dp(60),
-            # md_bg_color=get_color_from_hex("#8080804d"),
+            height=dp(60), 
+            # md_bg_color=get_color_from_hex("#000000"),
             pos_hint={"center_x": 0.5, "y": 0.01},
             padding=[dp(25), dp(10), dp(25), dp(10)],
-            radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
-            border_width=dp(1.2),
-            border_color="#D9D9D9",
+            # radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
+            # elevation=8,  # Add elevation for a shadow effect
         )
 
         # Use a BoxLayout for dynamic spacing
         icons_layout = MDBoxLayout(
             orientation="horizontal",
-            size_hint=(1, 1),  # Full width to allow dynamic spacing
-            height=dp(60),  # Optional: Define height explicitly
-            # padding=[dp(10), dp(10)]
+            size_hint=(1, 1), 
+            height=dp(60),
         )
 
         # Add icons with dynamic spacers between them
@@ -152,7 +120,7 @@ class HomeScreen(MDScreen):
                     size=(dp(32), dp(32)),
                     pos_hint={"center_x": 0.5, "center_y": 0.5},
                 ),
-                # style="icon_only",
+                style="filled",
                 size_hint=(None, None),
                 size=(dp(32), dp(32)),
                 pos_hint={"center_x": 0.5, "center_y": 0.5}
@@ -161,7 +129,8 @@ class HomeScreen(MDScreen):
         # Add the dynamic icon layout to the navigation bar
         nav_bar.add_widget(icons_layout)
 
+        # Add the navigation bar to the main layout
         layout.add_widget(nav_bar)
 
         # Add the main layout to the screen
-        self.add_widget(layout) 
+        self.add_widget(layout)
