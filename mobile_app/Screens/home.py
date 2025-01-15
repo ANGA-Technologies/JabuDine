@@ -5,7 +5,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
-from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon
+from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon, MDFabButton
 from kivymd.uix.widget import MDWidget
 from kivy.uix.widget import Widget
 from kivy.utils import get_color_from_hex
@@ -14,9 +14,25 @@ from kivy.utils import get_color_from_hex
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        # self.theme_cls.primary_palette = "Purple"
 
         # Float Layout for flexibility
         layout = FloatLayout()
+
+        layout.add_widget(
+            # theme_color = "Green",
+            MDFabButton(
+                icon="account",
+                style="small",
+                color_map="tertiary",
+                # theme_icon_color="Custom",
+                icon_color=get_color_from_hex("#ffffff"),
+                size_hint=(None, None),
+                size=(dp(15), dp(15)),
+                pos_hint={"center_x": 0.9, "center_y": 0.92},
+            ),
+                # pos_hint={"center_x": 0.9, "center_y": 0.95},
+        )
 
         # Greeting Label
         layout.add_widget(
@@ -107,11 +123,18 @@ class HomeScreen(MDScreen):
         )
 
         # Add icons with dynamic spacers between them
-        icon_sources = ["home", "silverware-variant", "bell", "account"]
+        icon_sources = ["home", "silverware-variant", "bell", "bookmark-multiple"]
         for index, icon in enumerate(icon_sources):
             if index > 0:
                 # Add a spacer widget between icons
                 icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
+
+            # Check if the current icon is "home" to set the style
+            # button_style = "elevated" if icon == "home" else "filled"
+            if icon == "home":
+                button_style = "elevated"
+            else:
+                button_style = "filled"
 
             icons_layout.add_widget(MDButton(
                 MDButtonIcon(
@@ -120,7 +143,7 @@ class HomeScreen(MDScreen):
                     size=(dp(32), dp(32)),
                     pos_hint={"center_x": 0.5, "center_y": 0.5},
                 ),
-                style="filled",
+                style=button_style,
                 size_hint=(None, None),
                 size=(dp(32), dp(32)),
                 pos_hint={"center_x": 0.5, "center_y": 0.5}

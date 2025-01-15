@@ -6,7 +6,7 @@ from kivy.utils import get_color_from_hex
 from kivy.graphics import Color, Rectangle
 
 # Set the window size directly
-Window.size = (360, 640)  # Width and height in pixels
+Window.size = (320, 640)  # Width and height in pixels
 
 class GradientWidget(HomeScreen):
     def __init__(self, start_color=(1, 1, 1, 1), end_color=(1, 0, 0, 1), steps=50, **kwargs):
@@ -46,6 +46,7 @@ class Main(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Orange"
+        
 
         # from white (top) to orange (bottom):
         return GradientWidget(start_color=get_color_from_hex("#E59400"), end_color=get_color_from_hex("#FFFFFF"), steps=64)
