@@ -14,7 +14,6 @@ from kivy.utils import get_color_from_hex
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.theme_cls.primary_palette = "Purple"
 
         # Float Layout for flexibility
         layout = FloatLayout()
@@ -31,7 +30,6 @@ class HomeScreen(MDScreen):
                 size=(dp(15), dp(15)),
                 pos_hint={"center_x": 0.9, "center_y": 0.92},
             ),
-                # pos_hint={"center_x": 0.9, "center_y": 0.95},
         )
 
         # Greeting Label
