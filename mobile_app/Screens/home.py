@@ -23,9 +23,9 @@ class HomeScreen(MDScreen):
             MDFabButton(
                 icon="account",
                 style="small",
-                color_map="tertiary",
-                # theme_icon_color="Custom",
-                icon_color=get_color_from_hex("#ffffff"),
+                color_map="surface",
+                theme_icon_color="Custom",
+                icon_color=get_color_from_hex("#4b3f2a"),
                 size_hint=(None, None),
                 size=(dp(15), dp(15)),
                 pos_hint={"center_x": 0.9, "center_y": 0.92},
@@ -35,10 +35,13 @@ class HomeScreen(MDScreen):
         # Greeting Label
         layout.add_widget(
             MDLabel(
-                text="Hello, Happy!",
-                font_size="24sp",
+                adaptive_size=True,
+                text="Hello, Foodie!",
+                font_size="12 sp",
+                role= "small",
+                font_style= "Times", 
                 halign="center",
-                pos_hint={"center_x": 0.5, "center_y": 0.85},
+                pos_hint={"center_x": 0.2, "center_y": 0.91},
             )
         )
 
@@ -98,60 +101,6 @@ class HomeScreen(MDScreen):
         # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
 
-        # Bottom Navigation Bar using MDCard
-        nav_bar = MDCard(
-            style="filled",
-            theme_bg_color= "Custom",
-            md_bg_color= get_color_from_hex("#ffffff50"),
-            orientation="horizontal",
-            size_hint=(0.97, None),
-            height=dp(60), 
-            # md_bg_color=get_color_from_hex("#000000"),
-            pos_hint={"center_x": 0.5, "y": 0.01},
-            padding=[dp(25), dp(10), dp(25), dp(10)],
-            # radius=[dp(15), dp(15), dp(15), dp(15)],  # Rounded corners
-            # elevation=8,  # Add elevation for a shadow effect
-        )
-
-        # Use a BoxLayout for dynamic spacing
-        icons_layout = MDBoxLayout(
-            orientation="horizontal",
-            size_hint=(1, 1), 
-            height=dp(60),
-        )
-
-        # Add icons with dynamic spacers between them
-        icon_sources = ["home", "silverware-variant", "bell", "bookmark-multiple"]
-        for index, icon in enumerate(icon_sources):
-            if index > 0:
-                # Add a spacer widget between icons
-                icons_layout.add_widget(Widget(size_hint_x=1))  # Spacer adjusts dynamically
-
-            # Check if the current icon is "home" to set the style
-            # button_style = "elevated" if icon == "home" else "filled"
-            if icon == "home":
-                button_style = "elevated"
-            else:
-                button_style = "filled"
-
-            icons_layout.add_widget(MDButton(
-                MDButtonIcon(
-                    icon=icon,
-                    size_hint=(None, None),
-                    size=(dp(32), dp(32)),
-                    pos_hint={"center_x": 0.5, "center_y": 0.5},
-                ),
-                style=button_style,
-                size_hint=(None, None),
-                size=(dp(32), dp(32)),
-                pos_hint={"center_x": 0.5, "center_y": 0.5}
-            ))
-
-        # Add the dynamic icon layout to the navigation bar
-        nav_bar.add_widget(icons_layout)
-
-        # Add the navigation bar to the main layout
-        layout.add_widget(nav_bar)
 
         # Add the main layout to the screen
         self.add_widget(layout)

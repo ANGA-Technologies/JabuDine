@@ -20,11 +20,11 @@ class Menu(MDScreen):
 
         layout.add_widget(
             MDFabButton(
-                icon="menu",
+                icon="dots-vertical",
                 style="small",
-                color_map="tertiary",
-                # theme_icon_color="Custom",
-                icon_color=get_color_from_hex("#ffffff"),
+                color_map="surface",
+                theme_icon_color="Custom",
+                icon_color=get_color_from_hex("#4b3f2a"),
                 size_hint=(None, None),
                 size=(dp(15), dp(15)),
                 pos_hint={"center_x": 0.9, "center_y": 0.92},
