@@ -20,12 +20,13 @@ class HomeScreen(MDScreen):
 
         layout.add_widget(
             # theme_color = "Green",
-            MDFabButton(
-                icon="account",
-                style="small",
-                color_map="surface",
-                theme_icon_color="Custom",
-                icon_color=get_color_from_hex("#4b3f2a"),
+            MDButton(
+                MDButtonIcon(
+                    icon="dots-horizontal",
+                    color=get_color_from_hex("#ffffff"),
+                    pos_hint={"center_x": 0.5, "center_y": 0.5},
+                ),
+                style="text",
                 size_hint=(None, None),
                 size=(dp(15), dp(15)),
                 pos_hint={"center_x": 0.9, "center_y": 0.92},
@@ -37,11 +38,10 @@ class HomeScreen(MDScreen):
             MDLabel(
                 adaptive_size=True,
                 text="Hello, Foodie!",
-                font_size="12 sp",
-                role= "small",
-                font_style= "Times", 
+                role= "large",
+                font_style= "Title", 
                 halign="center",
-                pos_hint={"center_x": 0.2, "center_y": 0.91},
+                pos_hint={"center_x": 0.3, "center_y": 0.91},
             )
         )
 

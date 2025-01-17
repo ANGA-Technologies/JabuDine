@@ -84,11 +84,11 @@ class Main(MDApp):
                     ripple_color=get_color_from_hex("#55452a")
                 ),
                 theme_bg_color="Custom",
-                md_bg_color=get_color_from_hex("#ffd58d"),
+                md_bg_color=get_color_from_hex("#fff7ea"),
                 on_switch_tabs=self.on_switch_tabs,
             ),
             orientation="vertical",
-            md_bg_color=get_color_from_hex("#ffeccc"),
+            md_bg_color=get_color_from_hex("#ffffff"),
         )
 
 
