@@ -29,7 +29,7 @@ class HomeScreen(MDScreen):
                 style="text",
                 size_hint=(None, None),
                 size=(dp(15), dp(15)),
-                pos_hint={"center_x": 0.9, "center_y": 0.92},
+                pos_hint={"center_x": 0.9, "center_y": 0.8},
             ),
         )
 
@@ -41,7 +41,7 @@ class HomeScreen(MDScreen):
                 role= "large",
                 font_style= "Title", 
                 halign="center",
-                pos_hint={"center_x": 0.3, "center_y": 0.91},
+                pos_hint={"center_x": 0.3, "center_y": 0.8},
             )
         )
 
@@ -49,11 +49,14 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="JabuDine",
-                font_size="32sp",
+                # font_size="32sp",
+                theme_font_name="Custom",
+                font_name="assets/fonts/fanfarron.otf",
+                font_style="Display",
                 halign="center",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#30016D"),
-                pos_hint={"center_x": 0.5, "center_y": 0.7},
+                text_color=get_color_from_hex("#965f00"),
+                pos_hint={"center_x": 0.5, "center_y": 0.9},
             )
         )
 
