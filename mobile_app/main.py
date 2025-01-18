@@ -3,6 +3,7 @@ from Screens.home import HomeScreen  # Import from the screens folder
 from Screens.alerts import Alerts  # Import from the screens folder
 from Screens.explore import Explore  # Import from the screens folder
 from Screens.menu import Menu  # Import from the screens folder
+from Screens.account import Account  # Import from the screens folder
 from kivy.utils import get_color_from_hex
 from kivy.graphics import Color, Rectangle
 from kivy.metrics import dp
@@ -20,7 +21,7 @@ from kivymd.uix.navigationbar import (
 
 
 # Set the window size
-Window.size = (320, 640)
+Window.size = (320, 540)
 
 
 class BaseMDNavigationItem(MDNavigationItem):
@@ -33,7 +34,7 @@ class BaseMDNavigationItem(MDNavigationItem):
         self.add_widget(MDNavigationItemLabel(text=self.text))
 
 
-class Main(MDApp):
+class JabuDine(MDApp):
     def on_switch_tabs(
         self,
         bar: MDNavigationBar,
@@ -45,6 +46,12 @@ class Main(MDApp):
         self.root.get_ids().screen_manager.current = item_text
 
     def build(self):
+        # ScreenManager with Home and Account screens
+        # sm = MDScreenManager()
+        # sm.add_widget(HomeScreen(name="Home"))  # Add Home 
+        # sm.add_widget(Account(name="Account"))  # Add Account screen
+        # return sm
+
         return MDBoxLayout(
             MDScreenManager(
                 HomeScreen(
@@ -59,6 +66,9 @@ class Main(MDApp):
                 Explore(
                     name="Explore",  # Use the imported Explore screen
                 ),
+                Account(
+                    name="Account",  # Use the imported Account screen
+                ),
                 id="screen_manager",
             ),
             MDNavigationBar(
@@ -70,7 +80,7 @@ class Main(MDApp):
                 ),
                 BaseMDNavigationItem(
                     icon="silverware-variant",
-                    text="Menu",
+                    text="Menu", 
                     ripple_color=get_color_from_hex("#55452a")
                 ),
                 BaseMDNavigationItem(
@@ -92,4 +102,5 @@ class Main(MDApp):
         )
 
 
-Main().run()
+if __name__ == "__main__":
+    JabuDine().run()
