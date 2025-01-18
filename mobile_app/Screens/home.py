@@ -106,9 +106,15 @@ class HomeScreen(MDScreen):
         # Add the main layout to the screen
         self.add_widget(layout)
 
+        self.dropdown_menu = None
+
     def open_account_page(self):
         """Callback to open the Account page."""
         self.manager.current = "Account"
+        
+        # Dismiss the dropdown menu when navigating
+        if self.dropdown_menu:
+            self.dropdown_menu.dismiss()
 
     def menu(self, button):
         menu_items = [
@@ -126,7 +132,12 @@ class HomeScreen(MDScreen):
                 "leading_icon": "logout",
             }
         ]
-        MDDropdownMenu(
+        
+        # Create and store the dropdown menu
+        self.dropdown_menu = MDDropdownMenu(
             caller=button,
             items=menu_items,
-        ).open()
+        )
+        
+        # Open the dropdown menu
+        self.dropdown_menu.open()
