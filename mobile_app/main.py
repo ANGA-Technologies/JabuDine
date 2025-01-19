@@ -12,6 +12,8 @@ from kivy.properties import StringProperty
 from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.boxlayout import MDBoxLayout
+# from kivy.uix.screenmanager import FadeTransition
+from kivymd.uix.transition import MDSwapTransition
 from kivymd.uix.navigationbar import (
     MDNavigationBar,
     MDNavigationItem,
@@ -46,12 +48,6 @@ class JabuDine(MDApp):
         self.root.get_ids().screen_manager.current = item_text
 
     def build(self):
-        # ScreenManager with Home and Account screens
-        # sm = MDScreenManager()
-        # sm.add_widget(HomeScreen(name="Home"))  # Add Home 
-        # sm.add_widget(Account(name="Account"))  # Add Account screen
-        # return sm
-
         return MDBoxLayout(
             MDScreenManager(
                 HomeScreen(
@@ -68,8 +64,13 @@ class JabuDine(MDApp):
                 ),
                 Account(
                     name="Account",  # Use the imported Account screen
+                    transition_progress = 12, 
+                    transition_state = 'out',
                 ),
+                transition=MDSwapTransition(),
                 id="screen_manager",
+                
+                
             ),
             MDNavigationBar(
                 BaseMDNavigationItem(
@@ -97,6 +98,7 @@ class JabuDine(MDApp):
                 md_bg_color=get_color_from_hex("#fff7ea"),
                 on_switch_tabs=self.on_switch_tabs,
             ),
+            
             orientation="vertical",
             md_bg_color=get_color_from_hex("#ffffff"),
         )

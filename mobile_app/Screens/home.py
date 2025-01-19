@@ -63,9 +63,12 @@ class HomeScreen(MDScreen):
         layout.add_widget(
             MDLabel(
                 text="Your Table, Your Taste!",
-                font_size="18sp",
-                halign="center",
+                theme_font_name="Custom",
+                font_name="assets/fonts/creame.ttf",
                 theme_text_color="Custom",
+                font_style="Headline",
+                role="medium",
+                halign="center",
                 text_color=get_color_from_hex("#800080"),
                 pos_hint={"center_x": 0.5, "center_y": 0.65},
             )
@@ -77,7 +80,7 @@ class HomeScreen(MDScreen):
             spacing=20,
             size_hint=(None, None),
             size=(360, 50),
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            pos_hint={"center_x": 0.5, "center_y": 0.55},
         )
 
         # Spacer Widget to center buttons
