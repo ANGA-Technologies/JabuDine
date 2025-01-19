@@ -27,7 +27,7 @@ class Account(MDScreen):
 
         # Profile Picture
         profile_image = Image(
-            source="C:\\Users\\canda\\Downloads\\Tynash\\Tynash.jpg",
+            source="assets/images/profile_placeholder.jpg",
             size_hint=(None, None),
             size=(100, 100),
             pos_hint={"center_x": 0.5},
