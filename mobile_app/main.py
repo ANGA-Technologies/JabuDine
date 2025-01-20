@@ -13,7 +13,7 @@ from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.boxlayout import MDBoxLayout
 # from kivy.uix.screenmanager import FadeTransition
-from kivymd.uix.transition import MDSwapTransition
+from kivymd.uix.transition import MDSwapTransition, MDSharedAxisTransition, MDFadeSlideTransition
 from kivymd.uix.navigationbar import (
     MDNavigationBar,
     MDNavigationItem,
