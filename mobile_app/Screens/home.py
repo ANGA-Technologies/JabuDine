@@ -116,12 +116,30 @@ class HomeScreen(MDScreen):
 
         explore_swipper.add_widget(
             MDSwiperItem(
-                # fitimage="assets/images/food1.jpg",
-               
+                FitImage(
+                    source="assets/images/dish1.jpg",
+                    radius= 7.5,
+                    size_hint=(1, 0.8  ),
+                ),
+                # MDLabel(
+                #     text="Berakuso, Ghana",
+                #     halign="right",
+                #     pos_hint={"center_x": 0.5, "center_y": 0.1},
+                # ),
+                MDLabel(
+                    text="Dish 1",
+                    halign="center",
+                    valign="middle",
+                    theme_text_color="Custom",
+                    text_color=get_color_from_hex("#ffffff"),
+                    size_hint=(1, 0.1),
+                ),
+                orientation="vertical",
+                padding = 3,
                 radius= 10,
                 size_hint=(0.99, 0.9),
                 theme_bg_color="Custom",
-                md_bg_color=get_color_from_hex("#000000"),
+                md_bg_color=get_color_from_hex("#492e00"),
             )
         )
         explore_swipper.add_widget(
