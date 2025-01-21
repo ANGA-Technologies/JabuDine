@@ -7,8 +7,10 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon, MDFabButton
 from Screens.account import Account 
+from kivymd.uix.swiper import MDSwiper, MDSwiperItem
 from kivy.uix.widget import Widget
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.fitimage import FitImage
 from kivy.utils import get_color_from_hex
 
 class HomeScreen(MDScreen):
@@ -105,6 +107,34 @@ class HomeScreen(MDScreen):
 
         # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
+
+        explore_swipper = MDSwiper(
+            size_hint=(1, 0.5),
+            pos_hint={"center_x": 0.5, "center_y": 0.25},
+            # background_color=get_color_from_hex("#fff7ea"),
+        )
+
+        explore_swipper.add_widget(
+            MDSwiperItem(
+                # fitimage="assets/images/food1.jpg",
+               
+                radius= 10,
+                size_hint=(0.99, 0.9),
+                theme_bg_color="Custom",
+                md_bg_color=get_color_from_hex("#000000"),
+            )
+        )
+        explore_swipper.add_widget(
+            MDSwiperItem(
+                radius= 10,
+                size_hint=(0.99, 0.9),
+                md_bg_color=get_color_from_hex("#0d3c5c"),
+                # text="Menu",
+                # icon="silverware-variant",
+            )
+        )
+
+        layout.add_widget(explore_swipper)
 
         # Add the main layout to the screen
         self.add_widget(layout)

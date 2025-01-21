@@ -21,7 +21,6 @@ from kivymd.uix.navigationbar import (
     MDNavigationItemIcon,
 )
 
-
 # Set the window size
 Window.size = (320, 540)
 
@@ -68,9 +67,8 @@ class JabuDine(MDApp):
                     transition_state = 'out',
                 ),
                 transition=MDSwapTransition(),
+                # transition_axis = 'y',
                 id="screen_manager",
-                
-                
             ),
             MDNavigationBar(
                 BaseMDNavigationItem(
@@ -102,7 +100,6 @@ class JabuDine(MDApp):
             orientation="vertical",
             md_bg_color=get_color_from_hex("#ffffff"),
         )
-
 
 if __name__ == "__main__":
     JabuDine().run()
