@@ -2,7 +2,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Line
 from kivy.metrics import dp
 from kivymd.uix.screen import MDScreen
-from kivymd.uix.label import MDLabel
+from kivymd.uix.label import MDLabel, MDIcon
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon, MDFabButton
@@ -111,7 +111,6 @@ class HomeScreen(MDScreen):
         explore_swipper = MDSwiper(
             size_hint=(1, 0.5),
             pos_hint={"center_x": 0.5, "center_y": 0.25},
-            # background_color=get_color_from_hex("#fff7ea"),
         )
 
         explore_swipper.add_widget(
@@ -119,20 +118,27 @@ class HomeScreen(MDScreen):
                 FitImage(
                     source="assets/images/dish1.jpg",
                     radius= 7.5,
-                    size_hint=(1, 0.8  ),
+                    size_hint=(1, 0.7),
                 ),
-                # MDLabel(
-                #     text="Berakuso, Ghana",
-                #     halign="right",
-                #     pos_hint={"center_x": 0.5, "center_y": 0.1},
-                # ),
                 MDLabel(
-                    text="Dish 1",
+                    text="Dishy Shrimps",
                     halign="center",
                     valign="middle",
                     theme_text_color="Custom",
                     text_color=get_color_from_hex("#ffffff"),
                     size_hint=(1, 0.1),
+                ),
+                MDIcon(
+                    icon="map-marker",
+                    pos_hint={"center_x": 0.5, "center_y": 0.5},
+                    icon_color=get_color_from_hex("#ffffff"),
+                ),
+                MDLabel(
+
+                    text="Berakuso, Ghana",
+                    halign="center",
+                    size_hint=(1, 0.1),
+                    text_color=get_color_from_hex("#ffffffa0"),
                 ),
                 orientation="vertical",
                 padding = 3,
