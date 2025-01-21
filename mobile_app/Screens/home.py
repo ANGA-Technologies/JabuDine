@@ -129,10 +129,23 @@ class HomeScreen(MDScreen):
                 radius= 10,
                 size_hint=(0.99, 0.9),
                 md_bg_color=get_color_from_hex("#0d3c5c"),
-                # text="Menu",
-                # icon="silverware-variant",
             )
         )
+        explore_swipper.add_widget(
+            MDSwiperItem(
+                radius= 10,
+                size_hint=(0.99, 0.9),
+                md_bg_color=get_color_from_hex("#413c5c"),
+            )
+        )
+        explore_swipper.add_widget(
+            MDSwiperItem(
+                radius= 10,
+                size_hint=(0.99, 0.9),                
+                md_bg_color=get_color_from_hex("#0d5c5c"),
+            )
+        )
+
 
         layout.add_widget(explore_swipper)
 
