@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    location TEXT NOT NULL
+    location TEXT NOT NULL,
     img TEXT NOT NULL
 )
 ''')
@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS dishes (
     name TEXT NOT NULL,
     restaurant_id INTEGER NOT NULL,
     description TEXT NOT NULL,
+    img TEXT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurants (id)
-    img TEXT NOT NULL
 )
 ''')
 
@@ -51,9 +51,9 @@ dishes_data = [
     ("Fiery Fiesta Tacos", 5, "Tacos bursting with bold and zesty flavors.", "assets/images/dish5.jpg")
 ]
 
-cursor.executemany("INSERT INTO dishes (name, restaurant_id, description) VALUES (?, ?, ?)", dishes_data)
+cursor.executemany("INSERT INTO dishes (name, restaurant_id, description, img) VALUES (?, ?, ?, ?)", dishes_data)
 
-cursor.executemany("INSERT INTO restaurants (name, description, location) VALUES (?, ?, ?)", restaurants_data)
+cursor.executemany("INSERT INTO restaurants (name, description, location, img) VALUES (?, ?, ?, ?)", restaurants_data)
 
 # Commit and close the connection
 connection.commit()

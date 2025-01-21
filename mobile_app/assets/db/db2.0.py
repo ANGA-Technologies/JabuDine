@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
-    location TEXT NOT NULL
+    location TEXT NOT NULL,
     img TEXT NOT NULL
 )
 ''')
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS dishes (
     name TEXT NOT NULL,
     restaurant_id INTEGER NOT NULL,
     description TEXT NOT NULL,
+    img TEXT NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurants (id)
-    img TEXT NOT NULL
 )
 ''')
 
@@ -39,9 +39,10 @@ def add_restaurant():
     name = input("Enter restaurant name: ")
     description = input("Enter restaurant description: ")
     location = input("Enter restaurant location: ")
+    img = input("Enter restaurant image URL: ")
     cursor.execute(
-        "INSERT INTO restaurants (name, description, location) VALUES (?, ?, ?)",
-        (name, description, location)
+        "INSERT INTO restaurants (name, description, location, img) VALUES (?, ?, ?, ?)",
+        (name, description, location, img)
     )
     print(f"Restaurant '{name}' added successfully!")
 
@@ -61,9 +62,10 @@ def add_dish():
     restaurant_id = int(input("Enter the ID of the restaurant for the dish: "))
     name = input("Enter dish name: ")
     description = input("Enter dish description: ")
+    img = input("Enter dish image URL: ")
     cursor.execute(
-        "INSERT INTO dishes (name, restaurant_id, description) VALUES (?, ?, ?)",
-        (name, restaurant_id, description)
+        "INSERT INTO dishes (name, restaurant_id, description, img) VALUES (?, ?, ?, ?)",
+        (name, restaurant_id, description, img)
     )
     print(f"Dish '{name}' added successfully!")
 
