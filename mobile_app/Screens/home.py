@@ -152,13 +152,12 @@ class HomeScreen(MDScreen):
 
                 # Proper addition of MDBoxLayout with widgets inside
                 MDBoxLayout(
+                    # halign="center",
                     orientation="horizontal",
                     size_hint=(1, 0.1),
                     spacing=10,  # Add spacing for visibility
                     padding=(10, 0),  # Padding to avoid overlap
                     pos_hint={"center_x": 0.5, "center_y": 0.5},  # Positioning
-
-                    # Add child widgets properly
                     children=[]
                 ),
                 orientation="vertical",
@@ -176,7 +175,7 @@ class HomeScreen(MDScreen):
                 theme_text_color="Custom",
                 text_color=get_color_from_hex("#ffffff"),
                 size_hint=(None, None),
-                size=(dp(24), dp(24))
+                x = dp(5),
             ))
             box_layout.add_widget(MDLabel(
                 text=location, 
