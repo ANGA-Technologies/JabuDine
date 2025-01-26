@@ -91,12 +91,26 @@ class HomeScreen(MDScreen):
 
         # Order Button
         order_button = MDButton(
-            MDButtonText(text="Order"),
+            MDButtonText(
+                text="Order",
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#ffffff"),
+            ),
+            theme_bg_color="Custom",
+            md_bg_color=get_color_from_hex("#492e00"),
+            style="elevated",
         )
 
         # Reserve Button
         reserve_button = MDButton(
-            MDButtonText(text="Reserve"),
+            MDButtonText(
+                text="Reserve",
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#ffffff"),
+            ),
+            theme_bg_color="Custom",
+            md_bg_color=get_color_from_hex("#492e00"),
+            style="elevated",
         )
 
         # Add buttons to the layout
@@ -142,8 +156,7 @@ class HomeScreen(MDScreen):
                     size_hint=(1, 0.7),
                 ),
                 MDLabel(
-                    text=name,  # Restaurant name
-                    halign="center",
+                    text=name,
                     font_name="Times",
                     theme_text_color="Custom",
                     text_color=get_color_from_hex("#ffffff"),
@@ -173,18 +186,35 @@ class HomeScreen(MDScreen):
             box_layout.add_widget(MDIcon(
                 icon="map-marker",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#ffffff"),
+                text_color=get_color_from_hex("#d8d8d8"),
                 size_hint=(None, None),
-                x = dp(5),
+                # x = dp(5),
             ))
             box_layout.add_widget(MDLabel(
                 text=location, 
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#ffffff"),
+                text_color=get_color_from_hex("#d8d8d8"),
                 halign="left"
             ))
 
             explore_swipper.add_widget(swiper_item)
+
+        swiper_item = MDSwiperItem(
+            MDButton(
+                MDButtonIcon(
+                    icon="plus",
+                    color=get_color_from_hex("#ffffff"),
+                    pos_hint={"center_x": 0.5, "center_y": 0.5},
+                ),
+                MDButtonText(
+                    text="Explore More",
+                    theme_text_color="Custom",
+                    text_color=get_color_from_hex("#ffffff"),
+                ),
+            )
+        )
+
+        explore_swipper.add_widget(swiper_item)
 
         layout.add_widget(explore_swipper)
 
