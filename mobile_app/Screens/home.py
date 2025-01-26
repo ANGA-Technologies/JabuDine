@@ -94,10 +94,12 @@ class HomeScreen(MDScreen):
             MDButtonText(
                 text="Order",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#ffffff"),
+                text_color=get_color_from_hex("#492e00"),
             ),
             theme_bg_color="Custom",
-            md_bg_color=get_color_from_hex("#492e00"),
+            theme_shadow_color="Custom",
+            shadow_color=get_color_from_hex("#492e00"),
+            md_bg_color=get_color_from_hex("#ffffff"),
             style="elevated",
         )
 
@@ -106,10 +108,12 @@ class HomeScreen(MDScreen):
             MDButtonText(
                 text="Reserve",
                 theme_text_color="Custom",
-                text_color=get_color_from_hex("#ffffff"),
+                text_color=get_color_from_hex("#492e00"),
             ),
             theme_bg_color="Custom",
-            md_bg_color=get_color_from_hex("#492e00"),
+            theme_shadow_color="Custom",
+            shadow_color=get_color_from_hex("#492e00"),
+            md_bg_color=get_color_from_hex("#ffffff"),
             style="elevated",
         )
 
@@ -201,17 +205,22 @@ class HomeScreen(MDScreen):
 
         swiper_item = MDSwiperItem(
             MDButton(
-                MDButtonIcon(
-                    icon="plus",
-                    color=get_color_from_hex("#ffffff"),
-                    pos_hint={"center_x": 0.5, "center_y": 0.5},
-                ),
                 MDButtonText(
-                    text="Explore More",
+                    text="More",
                     theme_text_color="Custom",
                     text_color=get_color_from_hex("#ffffff"),
                 ),
-            )
+                size_hint=(None, None),
+                pos_hint={"center_x": 0.5, "center_y": 0.5},
+                theme_bg_color="Custom",
+                theme_shadow_color="Custom",
+                shadow_color=get_color_from_hex("#ffffff"),
+                md_bg_color=get_color_from_hex("#492e00"),
+                style="elevated",
+            ),
+            orientation="vertical",
+            padding=5,
+            size_hint=(0.5, 0.3),
         )
 
         explore_swipper.add_widget(swiper_item)
