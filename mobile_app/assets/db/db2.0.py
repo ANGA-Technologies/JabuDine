@@ -48,26 +48,60 @@ def add_restaurant():
 
 # Function to add a new dish
 def add_dish():
+    # Fetch the list of valid restaurants from the database
     cursor.execute("SELECT id, name FROM restaurants")
     restaurants = cursor.fetchall()
 
+    # Check if there are no restaurants in the database
     if not restaurants:
         print("No restaurants found! Please add a restaurant first.")
         return
 
+    # Display the list of available restaurants
     print("Available restaurants:")
     for rest in restaurants:
         print(f"{rest[0]}: {rest[1]}")
 
-    restaurant_id = int(input("Enter the ID of the restaurant for the dish: "))
+    # Prompt the user for a restaurant ID and validate it
+    try:
+        restaurant_id = int(input("Enter the ID of the restaurant for the dish: "))
+    except ValueError:
+        print("Invalid input. Please enter a numeric ID.")
+        return
+
+    # Check if the restaurant ID exists in the database
+    valid_restaurant_ids = [rest[0] for rest in restaurants]
+    if restaurant_id not in valid_restaurant_ids:
+        print("Invalid restaurant selected. Please choose a valid restaurant ID.")
+        return
+
+    # Prompt for dish details
     name = input("Enter dish name: ")
     description = input("Enter dish description: ")
     img = input("Enter dish image URL: ")
-    cursor.execute(
-        "INSERT INTO dishes (name, restaurant_id, description, img) VALUES (?, ?, ?, ?)",
-        (name, restaurant_id, description, img)
-    )
-    print(f"Dish '{name}' added successfully!")
+
+    # Display confirmation details to the user
+    print("\nPlease confirm the details before adding the dish:")
+    print(f"Restaurant ID: {restaurant_id}")
+    print(f"Dish Name: {name}")
+    print(f"Description: {description}")
+    print(f"Image URL: {img}")
+    
+    confirmation = input("\nDo you want to proceed? (yes/no): ").strip().lower()
+    if confirmation not in ['yes', 'y']:
+        print("Dish addition canceled.")
+        return
+
+    # Insert the dish into the database
+    try:
+        cursor.execute(
+            "INSERT INTO dishes (name, restaurant_id, description, img) VALUES (?, ?, ?, ?)",
+            (name, restaurant_id, description, img)
+        )
+        print(f"Dish '{name}' added successfully!")
+    except Exception as e:
+        print(f"An error occurred while adding the dish: {e}")
+
 
 # Menu loop
 def menu():

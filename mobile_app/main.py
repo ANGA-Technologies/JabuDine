@@ -63,7 +63,7 @@ class JabuDine(MDApp):
                     name="Home",  # Use the imported HomeScreen
                 ),
                 Menu(
-                    name="Menu",  # Use the imported Menu screen
+                    name="Dishes",  # Use the imported Menu screen
                 ),
                 Alerts(
                     name="Alerts",  # Use the imported Alerts screen
@@ -89,17 +89,17 @@ class JabuDine(MDApp):
                 ),
                 BaseMDNavigationItem(
                     icon="silverware-variant",
-                    text="Menu", 
-                    ripple_color=get_color_from_hex("#55452a")
-                ),
-                BaseMDNavigationItem(
-                    icon="bell",
-                    text="Alerts",
+                    text="Dishes", 
                     ripple_color=get_color_from_hex("#55452a")
                 ),
                 BaseMDNavigationItem(
                     icon="bookmark-multiple",
                     text="Explore",
+                    ripple_color=get_color_from_hex("#55452a")
+                ),
+                BaseMDNavigationItem(
+                    icon="bell",
+                    text="Alerts",
                     ripple_color=get_color_from_hex("#55452a")
                 ),
                 theme_bg_color="Custom",
