@@ -46,6 +46,16 @@ class JabuDine(MDApp):
         # Switch the screen in the ScreenManager based on the selected navigation item
         self.root.get_ids().screen_manager.current = item_text
 
+    def switch_to_screen(self, screen_name: str):
+        # Switch the screen in the ScreenManager
+        screen_manager = self.root.get_ids().screen_manager
+        screen_manager.current = screen_name
+
+        # Update the active state of the navigation bar
+        navigation_bar = self.root.children[0]  # Assuming navigation bar is the first child
+        for nav_item in navigation_bar.children:
+            nav_item.active = nav_item.text == screen_name
+
     def build(self):
         return MDBoxLayout(
             MDScreenManager(
@@ -59,7 +69,7 @@ class JabuDine(MDApp):
                     name="Alerts",  # Use the imported Alerts screen
                 ),
                 Explore(
-                    name="Explore",  # Use the imported Explore screen
+                    name="Explore",
                 ),
                 Account(
                     name="Account",  # Use the imported Account screen

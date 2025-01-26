@@ -1,6 +1,7 @@
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Line
 from kivy.metrics import dp
+from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel, MDIcon
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -211,16 +212,17 @@ class HomeScreen(MDScreen):
                     text_color=get_color_from_hex("#ffffff"),
                 ),
                 size_hint=(None, None),
-                pos_hint={"center_x": 0.5, "center_y": 0.5},
+                pos_hint={"center_x": 0.2, "center_y": 0.5},
                 theme_bg_color="Custom",
                 theme_shadow_color="Custom",
                 shadow_color=get_color_from_hex("#ffffff"),
                 md_bg_color=get_color_from_hex("#492e00"),
                 style="elevated",
+                on_release = self.open_explore_page
             ),
             orientation="vertical",
             padding=5,
-            size_hint=(0.5, 0.3),
+            size_hint=(0.3, 0.3),
         )
 
         explore_swipper.add_widget(swiper_item)
@@ -232,9 +234,16 @@ class HomeScreen(MDScreen):
 
         self.dropdown_menu = None
 
+    def open_explore_page(self, *args):
+        app = MDApp.get_running_app()
+        app.switch_to_screen("Explore")
+
+
     def open_account_page(self):
         """Callback to open the Account page."""
-        self.manager.current = "Account"
+        # self.manager.current = "Account"
+        app = MDApp.get_running_app()
+        app.switch_to_screen("Account")
         
         # Dismiss the dropdown menu when navigating
         if self.dropdown_menu:
@@ -245,7 +254,7 @@ class HomeScreen(MDScreen):
             {
                 "text": "Account",
                 "leading_icon": "account-circle",
-                "on_release": lambda: self.open_account_page(),
+                "on_release": self.open_account_page,
             },
             {
                 "text": "Settings",
