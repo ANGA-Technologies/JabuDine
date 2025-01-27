@@ -166,6 +166,7 @@ class HomeScreen(MDScreen):
                     theme_text_color="Custom",
                     text_color=get_color_from_hex("#ffffff"),
                     size_hint=(1, 0.1),
+                    padding=(10, 0),
                 ),
 
                 # Proper addition of MDBoxLayout with widgets inside
