@@ -2,12 +2,10 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
-from kivymd.uix.button import MDFabButton
-from kivy.uix.image import Image
-from kivymd.uix.dialog import MDDialog, MDDialogHeadlineText, MDDialogSupportingText, MDDialogButtonContainer
+from kivy.uix.button import Button
 from kivymd.uix.textfield import MDTextField
-from kivymd.uix.button import MDButton, MDButtonText
-
+from kivy.uix.image import Image
+# from kivymd.toast import toast
 
 class Account(MDScreen):
     def __init__(self, **kwargs):
@@ -16,146 +14,118 @@ class Account(MDScreen):
         # Main layout
         main_layout = MDBoxLayout(orientation="vertical", padding=20, spacing=20)
 
-        # Profile Card
-        profile_card = MDCard(
+        # User Card
+        user_card = MDCard(
             orientation="vertical",
-            padding=20,
-            size_hint=(0.9, 0.4),
-            pos_hint={"center_x": 0.5, "center_y": 0.1},
-            elevation=10,
-            ripple_behavior=True,
-        )
-
-        # Profile Picture
-        self.profile_image = Image(
-            source="assets/images/profile_placeholder.jpg",
             size_hint=(None, None),
-            size=(100, 100),
+            size=(300, 450),
             pos_hint={"center_x": 0.5},
+            elevation=4,
+            padding=20,
         )
 
-        # User Info
-        user_info_layout = MDBoxLayout(orientation="vertical", spacing=10, padding=10)
+        # User Image
+        user_image = Image(
+            source="assets/images/profile_placeholder.jpg",
+            size_hint_y=None,
+            height=120,
+        )
+        user_card.add_widget(user_image)
 
-        self.username_label = MDLabel(
-            text="Username: Developer",
-            halign="center",
-            font_size="24sp",
+        # User Details
+        details_layout = MDBoxLayout(
+            orientation="vertical",
+            adaptive_height=True,
+            spacing=12,
+            padding=10,
         )
 
-        self.email_label = MDLabel(
-            text="Email: info@angahub.com",
-            halign="center",
-            font_size="24sp",
+        self.name_field = MDTextField(
+            hint_text="Name",
+            text="Developer",
+            disabled=True
+        )
+        self.username_field = MDTextField(
+            hint_text="Username",
+            text="EA_Miles",
+            disabled=True
+        )
+        self.email_field = MDTextField(
+            hint_text="Email",
+            text="Developer@angahub.com",
+            disabled=True
+        )
+        self.contact_field = MDTextField(
+            hint_text="Contact",
+            text="0123456789",
+            disabled=True,
+            # helper_text="Enter a valid phone number",
+            # helper_text_mode="on_error"
         )
 
-        # Add widgets to user info layout
-        user_info_layout.add_widget(self.username_label)
-        user_info_layout.add_widget(self.email_label)
-
-        # Add widgets to profile card
-        profile_card.add_widget(self.profile_image)
-        profile_card.add_widget(user_info_layout)
+        details_layout.add_widget(self.name_field)
+        details_layout.add_widget(self.username_field)
+        details_layout.add_widget(self.email_field)
+        details_layout.add_widget(self.contact_field)
+        user_card.add_widget(details_layout)
 
         # Buttons
-        button_layout = MDBoxLayout(
-            orientation="vertical",
-            spacing=20,
-            size_hint=(0.8, None),
-            height=120,
-            pos_hint={"center_x": 0.5},
+        button_layout = MDBoxLayout(spacing=10, adaptive_height=True)
+
+        edit_button = Button(
+            text="Edit",
+            #icon="pencil-outline",
+            on_release=self.edit_details,
+            size_hint=(None, None),
+            size=(100, 50),
+            pos_hint={"center_x": 0.5}
+        )
+        save_button = Button(
+            text="Save",
+            on_release=self.save_details,
+            size_hint=(None, None),
+            size=(100, 50),
+            pos_hint={"center_x": 0.5}
         )
 
-        # Edit Profile Button
-        edit_profile_button = MDFabButton(
-            icon="pencil-outline",
-            pos_hint={"center_x": 0.5},
-            on_release=self.show_edit_profile_dialog,
-        )
+        button_layout.add_widget(edit_button)
+        button_layout.add_widget(save_button)
+        user_card.add_widget(button_layout)
 
-        # Logout Button
-        logout_button = MDFabButton(
-            text="Logout",
-            icon="logout",
-            pos_hint={"center_x": 0.5},
-            theme_text_color="Custom",
-            text_color=(1, 0, 0, 1),#red
-            on_release=self.logout,
-        )
-
-        # Add buttons to layout
-        button_layout.add_widget(edit_profile_button)
-        button_layout.add_widget(logout_button)
-
-        # Add all widgets to main layout
-        main_layout.add_widget(profile_card)
-        main_layout.add_widget(button_layout)
+        # Add card to main layout
+        main_layout.add_widget(user_card)
         self.add_widget(main_layout)
 
-        self.edit_profile_dialog = None
+    def edit_details(self, *args):
+        self.name_field.disabled = False
+        self.username_field.disabled = False
+        self.email_field.disabled = False
+        self.contact_field.disabled = False
+        # toast("Editing details...")
 
-    def show_edit_profile_dialog(self,instance):
-        print("Edit button pressed")
-        if not self.edit_profile_dialog:
-            # fields for username and email
-            self.username_field = MDTextField(
-                hint_text="Enter new username", text=self.username_label.text.split(": ")[1]
-            )
-            self.email_field = MDTextField(
-                hint_text="Enter new email", text=self.email_label.text.split(": ")[1]
-            )
+    #Save new user details
+    def save_details(self, *args):
+        name = self.name_field.text
+        username = self.username_field.text
+        email = self.email_field.text
+        contact = self.contact_field.text
 
-            # Create a layout for the dialog content
-            content = MDBoxLayout(
-                orientation="vertical",
-                spacing=10,
-                padding=20,
-                size_hint_y=None,
-                height=200,
-            )
-            content.add_widget(self.username_field)
-            content.add_widget(self.email_field)
+        # Email Validation
+        if not email or "@" not in email:
+            self.email_field.error = True
+            # toast("Invalid email address")
+            return
 
-            # Initialize MDDialog
-            self.edit_profile_dialog = MDDialog(
-                title="Edit Profile",
-                type="custom",
-                content_cls=content,
-                auto_dismiss=False,
-                buttons=[
-                    MDDialogButtonContainer(
-                        MDButton(
-                            MDButtonText(text="Cancel"),
-                            style="text",
-                            on_release=lambda x: self.close_edit_profile_dialog(),
-                        ),
-                        MDButton(
-                            MDButtonText(text="Save"),
-                            style="text",
-                            on_release=lambda x: self.save_profile_changes(),
-                        ),
-                        spacing="8dp",
-                    )
-                ],
-            )
-            self.edit_profile_dialog.open()
-        self.edit_profile_dialog.open()
+        #Contact validation
+        if not contact.isdigit() or len(contact) < 10:
+            self.contact_field.error = True
+            # toast("Invalid contact number")
+            return
 
-    def close_edit_profile_dialog(self):
-        if self.edit_profile_dialog:
-            self.edit_profile_dialog.dismiss()
+        self.name_field.disabled = True
+        self.username_field.disabled = True
+        self.email_field.disabled = True
+        self.contact_field.disabled = True
 
-    def save_profile_changes(self):
-        new_username = self.username_field.text.strip()
-        new_email = self.email_field.text.strip()
-
-        if new_username:
-            self.username_label.text = f"Username: {new_username}"
-        if new_email:
-            self.email_label.text = f"Email: {new_email}"
-
-        # Close dialog
-        self.close_edit_profile_dialog()
-
-    def logout(self, instance):
-        print("Logout button pressed")
+        # toast("Details saved successfully")
+        print(f"Details Saved:\nName: {name}\nUsername: {username}\nEmail: {email}\nContact: {contact}")
