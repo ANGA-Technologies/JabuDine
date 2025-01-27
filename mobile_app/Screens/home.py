@@ -1,6 +1,7 @@
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Line
 from kivy.metrics import dp
+from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel, MDIcon
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -12,6 +13,7 @@ from kivy.uix.widget import Widget
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.fitimage import FitImage
 from kivy.utils import get_color_from_hex
+import sqlite3
 
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -90,12 +92,30 @@ class HomeScreen(MDScreen):
 
         # Order Button
         order_button = MDButton(
-            MDButtonText(text="Order"),
+            MDButtonText(
+                text="Order",
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#492e00"),
+            ),
+            theme_bg_color="Custom",
+            theme_shadow_color="Custom",
+            shadow_color=get_color_from_hex("#492e00"),
+            md_bg_color=get_color_from_hex("#ffffff"),
+            style="elevated",
         )
 
         # Reserve Button
         reserve_button = MDButton(
-            MDButtonText(text="Reserve"),
+            MDButtonText(
+                text="Reserve",
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#492e00"),
+            ),
+            theme_bg_color="Custom",
+            theme_shadow_color="Custom",
+            shadow_color=get_color_from_hex("#492e00"),
+            md_bg_color=get_color_from_hex("#ffffff"),
+            style="elevated",
         )
 
         # Add buttons to the layout
@@ -108,68 +128,105 @@ class HomeScreen(MDScreen):
         # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
 
+        # Function to fetch restaurant data from the database
+        def fetch_restaurants_from_db():
+            db_path = "assets\db\jabudine.db"  # Replace with the path to your .db file
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            # Fetch restaurant data
+            cursor.execute("SELECT name, img, location FROM restaurants")
+            restaurants = cursor.fetchall()
+
+            conn.close()
+            return restaurants
+        
+        # Creating the explore_swipper and populating it dynamically
         explore_swipper = MDSwiper(
             size_hint=(1, 0.5),
             pos_hint={"center_x": 0.5, "center_y": 0.25},
         )
 
-        explore_swipper.add_widget(
-            MDSwiperItem(
+        # Fetch the data
+        restaurants = fetch_restaurants_from_db()
+
+        # Add widgets dynamically for each restaurant
+        for restaurant in restaurants:
+            name, image_path, location = restaurant
+
+            swiper_item = MDSwiperItem(
                 FitImage(
-                    source="assets/images/dish1.jpg",
-                    radius= 7.5,
+                    source=image_path,  # Restaurant image
+                    radius=7.5,
                     size_hint=(1, 0.7),
                 ),
                 MDLabel(
-                    text="Dishy Shrimps",
-                    halign="center",
-                    valign="middle",
+                    text=name,
+                    font_name="Times",
                     theme_text_color="Custom",
                     text_color=get_color_from_hex("#ffffff"),
                     size_hint=(1, 0.1),
+                    padding=(10, 0),
                 ),
-                MDIcon(
-                    icon="map-marker",
-                    pos_hint={"center_x": 0.5, "center_y": 0.5},
-                    icon_color=get_color_from_hex("#ffffff"),
-                ),
-                MDLabel(
 
-                    text="Berakuso, Ghana",
-                    halign="center",
+                # Proper addition of MDBoxLayout with widgets inside
+                MDBoxLayout(
+                    # halign="center",
+                    orientation="horizontal",
                     size_hint=(1, 0.1),
-                    text_color=get_color_from_hex("#ffffffa0"),
+                    spacing=10,  # Add spacing for visibility
+                    padding=(10, 0),  # Padding to avoid overlap
+                    pos_hint={"center_x": 0.5, "center_y": 0.5},  # Positioning
+                    children=[]
                 ),
                 orientation="vertical",
-                padding = 3,
-                radius= 10,
+                padding=5,
+                radius=10,
                 size_hint=(0.99, 0.9),
                 theme_bg_color="Custom",
                 md_bg_color=get_color_from_hex("#492e00"),
             )
-        )
-        explore_swipper.add_widget(
-            MDSwiperItem(
-                radius= 10,
-                size_hint=(0.99, 0.9),
-                md_bg_color=get_color_from_hex("#0d3c5c"),
-            )
-        )
-        explore_swipper.add_widget(
-            MDSwiperItem(
-                radius= 10,
-                size_hint=(0.99, 0.9),
-                md_bg_color=get_color_from_hex("#413c5c"),
-            )
-        )
-        explore_swipper.add_widget(
-            MDSwiperItem(
-                radius= 10,
-                size_hint=(0.99, 0.9),                
-                md_bg_color=get_color_from_hex("#0d5c5c"),
-            )
+
+            # Create the icon and label and add them to the box layout
+            box_layout = swiper_item.children[0]  # Get the MDBoxLayout
+            box_layout.add_widget(MDIcon(
+                icon="map-marker",
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#d8d8d8"),
+                size_hint=(None, None),
+                # x = dp(5),
+            ))
+            box_layout.add_widget(MDLabel(
+                text=location, 
+                theme_text_color="Custom",
+                text_color=get_color_from_hex("#d8d8d8"),
+                halign="left"
+            ))
+
+            explore_swipper.add_widget(swiper_item)
+
+        swiper_item = MDSwiperItem(
+            MDButton(
+                MDButtonText(
+                    text="More",
+                    theme_text_color="Custom",
+                    text_color=get_color_from_hex("#ffffff"),
+                ),
+                size_hint=(None, None),
+                pos_hint={"center_x": 0.2, "center_y": 0.5},
+                theme_bg_color="Custom",
+                theme_shadow_color="Custom",
+                shadow_color=get_color_from_hex("#ffffff"),
+                md_bg_color=get_color_from_hex("#492e00"),
+                style="elevated",
+                on_release = self.open_explore_page
+            ),
+            orientation="vertical",
+            padding=5,
+            size_hint=(0.3, 0.3),
         )
 
+        explore_swipper.add_widget(swiper_item)
 
         layout.add_widget(explore_swipper)
 
@@ -178,9 +235,16 @@ class HomeScreen(MDScreen):
 
         self.dropdown_menu = None
 
+    def open_explore_page(self, *args):
+        app = MDApp.get_running_app()
+        app.switch_to_screen("Explore")
+
+
     def open_account_page(self):
         """Callback to open the Account page."""
-        self.manager.current = "Account"
+        # self.manager.current = "Account"
+        app = MDApp.get_running_app()
+        app.switch_to_screen("Account")
         
         # Dismiss the dropdown menu when navigating
         if self.dropdown_menu:
@@ -191,7 +255,7 @@ class HomeScreen(MDScreen):
             {
                 "text": "Account",
                 "leading_icon": "account-circle",
-                "on_release": lambda: self.open_account_page(),
+                "on_release": self.open_account_page,
             },
             {
                 "text": "Settings",
