@@ -13,7 +13,9 @@ from kivy.uix.widget import Widget
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.fitimage import FitImage
 from kivy.utils import get_color_from_hex
+
 import sqlite3
+import random
 
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -128,18 +130,20 @@ class HomeScreen(MDScreen):
         # Add the buttons layout to the main layout
         layout.add_widget(buttons_layout)
 
-        # Function to fetch restaurant data from the database
+        # Function to fetch top rated restaurants from the database
         def fetch_restaurants_from_db():
             db_path = "assets\db\jabudine.db"  # Replace with the path to your .db file
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
 
-            # Fetch restaurant data
-            cursor.execute("SELECT name, img, location FROM restaurants")
+            # Fetch restaurants with rating of 5
+            cursor.execute("SELECT name, img, location FROM restaurants WHERE rating = 5")
             restaurants = cursor.fetchall()
 
             conn.close()
-            return restaurants
+
+            # Randomly pick up to 10 restaurants
+            return random.sample(restaurants, min(5, len(restaurants))) if restaurants else []
         
         # Creating the explore_swipper and populating it dynamically
         explore_swipper = MDSwiper(
