@@ -23,17 +23,13 @@ MDScreen:
 class Example(MDApp):
     def on_start(self):
         for tab_icon, tab_name in {
-            "airplane": "Flights",
-            "treasure-chest": "Trips",
-            "compass-outline": "Explore",
+            "food": "Order",
+            "table-chair": "Reserve",
         }.items():
-            if tab_icon == "treasure-chest":
+            if tab_icon == "cart":
                 self.root.ids.tabs.add_widget(
                     MDTabsItem(
                         MDTabsItemIcon(
-                            MDTabsBadge(
-                                text="99",
-                            ),
                             icon=tab_icon,
                         ),
                         MDTabsItemText(
@@ -52,10 +48,10 @@ class Example(MDApp):
                         ),
                     )
                 )
-            self.root.ids.tabs.switch_tab(icon="airplane")
+            self.root.ids.tabs.switch_tab(text="Trips")
 
     def build(self):
-        self.theme_cls.primary_palette = "Olive"
+        self.theme_cls.primary_palette = "Red"
         return Builder.load_string(KV)
 
 
