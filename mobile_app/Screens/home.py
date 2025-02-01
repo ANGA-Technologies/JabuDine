@@ -16,6 +16,7 @@ from kivy.utils import get_color_from_hex
 
 import sqlite3
 import random
+import os
 
 class HomeScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -132,7 +133,17 @@ class HomeScreen(MDScreen):
 
         # Function to fetch top rated restaurants from the database
         def fetch_restaurants_from_db():
-            db_path = "assets\db\jabudine.db"  # Replace with the path to your .db file
+               
+            # Get the directory where the current script is located
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Navigate to the parent directory of the script directory
+            parent_dir = os.path.dirname(script_dir)
+
+            # Define the database file path relative to the parent directory
+            db_path = os.path.join(parent_dir, "assets", "db", "jabudine.db")
+
+            # db_path = "assets\db\jabudine.db"  # Replace with the path to your .db file
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
 
@@ -244,11 +255,10 @@ class HomeScreen(MDScreen):
         app.switch_to_screen("Explore")
 
 
-    def open_account_page(self):
-        """Callback to open the Account page."""
-        # self.manager.current = "Account"
+    def open_page(self, screen_name):
+        """Callback to open the specified page."""
         app = MDApp.get_running_app()
-        app.switch_to_screen("Account")
+        app.switch_to_screen(screen_name)
         
         # Dismiss the dropdown menu when navigating
         if self.dropdown_menu:
@@ -259,15 +269,17 @@ class HomeScreen(MDScreen):
             {
                 "text": "Account",
                 "leading_icon": "account-circle",
-                "on_release": self.open_account_page,
+                "on_release": lambda x="Account": self.open_page(x),
             },
             {
                 "text": "Settings",
                 "leading_icon": "cog",
+                "on_release": lambda x="Services": self.open_page(x),
             },
             {
                 "text": "Logout",
                 "leading_icon": "logout",
+                # "on_release": self.open_page,
             }
         ]
         

@@ -17,7 +17,16 @@ class Explore(MDScreen):
 
         # Fetch restaurants from the database
         def fetch_restaurants_from_db():
-            db_path = os.path.join("assets", "db", "jabudine.db")  # Correct path
+            
+            # Get the directory where the current script is located
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Navigate to the parent directory of the script directory
+            parent_dir = os.path.dirname(script_dir)
+
+            # Define the database file path relative to the parent directory
+            db_path = os.path.join(parent_dir, "assets", "db", "jabudine.db")
+            
             conn = sqlite3.connect(db_path)
             cursor = conn.cursor()
 

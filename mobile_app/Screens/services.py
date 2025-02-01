@@ -9,8 +9,8 @@ from kivymd.uix.tab import (
 )
 
 KV = '''
-MDScreen:
-    md_bg_color: self.theme_cls.backgroundColor
+FloatLayout:
+    # md_bg_color: self.theme_cls.backgroundColor
 
     MDTabsPrimary:
         id: tabs
@@ -20,7 +20,7 @@ MDScreen:
 '''
 
 
-class Example(MDApp):
+class Services(MDApp):
     def on_start(self):
         for tab_icon, tab_name in {
             "food": "Order",
@@ -51,8 +51,8 @@ class Example(MDApp):
             self.root.ids.tabs.switch_tab(text="Trips")
 
     def build(self):
-        self.theme_cls.primary_palette = "Red"
+        # self.theme_cls.primary_palette = "Red"
         return Builder.load_string(KV)
 
 
-Example().run()
+Services().run()
