@@ -72,19 +72,24 @@ class Account(MDScreen):
             size=(100, 50),
             pos_hint={"center_x": 0.5},
         )
-        list_users_button = Button(text="List Users", on_release=self.list_users, size_hint=(None, None), size=(100, 50))
+        # list_users_button = Button(
+        #     text="List Users",
+        #     on_release=self.list_users,
+        #     size_hint=(None, None),
+        #     size=(100, 50)
+        # )
         button_layout.add_widget(edit_button)
         button_layout.add_widget(save_button)
-        button_layout.add_widget(list_users_button)
+        # button_layout.add_widget(list_users_button)
         user_card.add_widget(button_layout)
 
         # Add card to main layout
         main_layout.add_widget(user_card)
 
-        self.user_list_container = ScrollView(size_hint=(1, None), size=(300, 300))
-        self.user_list_layout = MDBoxLayout(orientation="vertical", adaptive_height=True, spacing=10, padding=10)
-        self.user_list_container.add_widget(self.user_list_layout)
-        main_layout.add_widget(self.user_list_container)
+        # self.user_list_container = ScrollView(size_hint=(1, None), size=(300, 300))
+        # self.user_list_layout = MDBoxLayout(orientation="vertical", adaptive_height=True, spacing=10, padding=10)
+        # self.user_list_container.add_widget(self.user_list_layout)
+        # main_layout.add_widget(self.user_list_container)
 
         self.add_widget(main_layout)
 
@@ -182,22 +187,22 @@ class Account(MDScreen):
 
         print(f"Details Saved:\nName: {name}\nUsername: {username}\nEmail: {email}\nContact: {contact}")
     
-    def list_users(self, *args):
-        """Fetch and display all users"""
-        conn = sqlite3.connect("users.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT name, username, email, contact FROM users")
-        users = cursor.fetchall()
-        conn.close()
+    # def list_users(self, *args):
+    #     """Fetch and display all users"""
+    #     conn = sqlite3.connect("users.db")
+    #     cursor = conn.cursor()
+    #     cursor.execute("SELECT name, username, email, contact FROM users")
+    #     users = cursor.fetchall()
+    #     conn.close()
 
-        # Clear existing list
-        self.user_list_layout.clear_widgets()
+    #     # Clear existing list
+    #     self.user_list_layout.clear_widgets()
 
-        if users:
-            for user in users:
-                user_box = MDBoxLayout(orientation="horizontal", spacing=10, adaptive_height=True)
-                user_label = MDLabel(text=f"{user[0]} ({user[1]}) - {user[2]} | {user[3]}", size_hint_x=1)
-                user_box.add_widget(user_label)
-                self.user_list_layout.add_widget(user_box)
-        else:
-            self.user_list_layout.add_widget(MDLabel(text="No users found", halign="center"))
+    #     if users:
+    #         for user in users:
+    #             user_box = MDBoxLayout(orientation="horizontal", spacing=10, adaptive_height=True)
+    #             user_label = MDLabel(text=f"{user[0]} ({user[1]}) - {user[2]} | {user[3]}", size_hint_x=1)
+    #             user_box.add_widget(user_label)
+    #             self.user_list_layout.add_widget(user_box)
+    #     else:
+    #         self.user_list_layout.add_widget(MDLabel(text="No users found", halign="center"))
