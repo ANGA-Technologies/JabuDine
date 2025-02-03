@@ -4,7 +4,11 @@ from Screens.alerts import Alerts  # Import from the screens folder
 from Screens.explore import Explore  # Import from the screens folder
 from Screens.menu import Menu  # Import from the screens folder
 from Screens.account import Account  # Import from the screens folder
+<<<<<<< HEAD
 # from Screens.services import Services  # Import from the screens folder
+=======
+#from Screens.services import Services  # Import from the screens folder
+>>>>>>> 8f5258f5e428134bc113db32e5a5ccf7e71e22b5
 
 from kivy.utils import get_color_from_hex
 from kivy.graphics import Color, Rectangle

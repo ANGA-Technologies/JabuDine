@@ -1,3 +1,6 @@
+import sqlite3
+import random
+from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -5,30 +8,39 @@ from kivymd.uix.card import MDCard
 from kivy.uix.button import Button
 from kivymd.uix.textfield import MDTextField
 from kivy.uix.image import Image
-# from kivymd.toast import toast
+from kivy.app import App
+from kivy.uix.scrollview import ScrollView
 
 class Account(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.db_init()
 
-        # Main layout
-        main_layout = MDBoxLayout(orientation="vertical", padding=20, spacing=20)
+        # Main layout with ScrollView 
+        scroll_view = ScrollView()
+        main_layout = MDBoxLayout(
+            orientation="vertical", 
+            padding="5dp", 
+            spacing="10dp", 
+            adaptive_height=True,
+            size_hint_y=None
+        )
 
-        # User Card
+        # User Card with dynamic sizing
         user_card = MDCard(
             orientation="vertical",
-            size_hint=(None, None),
-            size=(300, 450),
+            size_hint=(0.9, None),  # Responsive width
+            height=Window.height * 0.5,  # Proportional height
             pos_hint={"center_x": 0.5},
             elevation=4,
-            padding=20,
+            padding="10dp",
         )
 
         # User Image
         user_image = Image(
             source="assets/images/profile_placeholder.jpg",
-            size_hint_y=None,
-            height=120,
+            size_hint=(None, None),
+            size=(Window.width * 0.3, Window.width * 0.3), # Responsive size
         )
         user_card.add_widget(user_image)
 
@@ -36,32 +48,14 @@ class Account(MDScreen):
         details_layout = MDBoxLayout(
             orientation="vertical",
             adaptive_height=True,
-            spacing=12,
-            padding=10,
+            spacing="8dp",
+            padding="10dp",
         )
 
-        self.name_field = MDTextField(
-            hint_text="Name",
-            text="Developer",
-            disabled=True
-        )
-        self.username_field = MDTextField(
-            hint_text="Username",
-            text="EA_Miles",
-            disabled=True
-        )
-        self.email_field = MDTextField(
-            hint_text="Email",
-            text="Developer@angahub.com",
-            disabled=True
-        )
-        self.contact_field = MDTextField(
-            hint_text="Contact",
-            text="0123456789",
-            disabled=True,
-            # helper_text="Enter a valid phone number",
-            # helper_text_mode="on_error"
-        )
+        self.name_field = MDTextField(hint_text="Name", disabled=True)
+        self.username_field = MDTextField(hint_text="Username", disabled=True)
+        self.email_field = MDTextField(hint_text="Email", disabled=True)
+        self.contact_field = MDTextField(hint_text="Contact", disabled=True)
 
         details_layout.add_widget(self.name_field)
         details_layout.add_widget(self.username_field)
@@ -69,23 +63,24 @@ class Account(MDScreen):
         details_layout.add_widget(self.contact_field)
         user_card.add_widget(details_layout)
 
-        # Buttons
-        button_layout = MDBoxLayout(spacing=10, adaptive_height=True)
+        # Buttons with responsive size
+        button_layout = MDBoxLayout(
+            spacing="10dp", 
+            adaptive_height=True, 
+            size_hint=(1, None),
+        )
 
         edit_button = Button(
             text="Edit",
-            #icon="pencil-outline",
             on_release=self.edit_details,
-            size_hint=(None, None),
-            size=(100, 50),
-            pos_hint={"center_x": 0.5}
+            size_hint=(0.45, None),
+            height="50dp",
         )
         save_button = Button(
             text="Save",
             on_release=self.save_details,
-            size_hint=(None, None),
-            size=(100, 50),
-            pos_hint={"center_x": 0.5}
+            size_hint=(0.45, None),
+            height="50dp",
         )
 
         button_layout.add_widget(edit_button)
@@ -94,16 +89,63 @@ class Account(MDScreen):
 
         # Add card to main layout
         main_layout.add_widget(user_card)
-        self.add_widget(main_layout)
+        scroll_view.add_widget(main_layout)
+        self.add_widget(scroll_view)
+
+        # Load random user details from the database
+        self.load_user_details()
+
+    def db_init(self):
+        """Initialize the database and create table if not exists."""
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                username TEXT UNIQUE,
+                email TEXT UNIQUE,
+                contact TEXT
+            )
+            """
+        )
+        conn.commit()
+        conn.close()
+
+    def load_user_details(self):
+        """Load a random user from the database."""
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM users")
+        user_ids = cursor.fetchall()
+
+        if user_ids:
+            random_id = random.choice(user_ids)[0] # Random user id for testing purposes
+            cursor.execute("SELECT name, username, email, contact FROM users WHERE id = ?", (random_id,))
+            user = cursor.fetchone()
+        else:
+            user = None
+
+        conn.close()
+
+        if user:
+            self.name_field.text = user[0]
+            self.username_field.text = user[1]
+            self.email_field.text = user[2]
+            self.contact_field.text = user[3]
+        else:
+            self.name_field.text = "DEFAULT USER"
+            self.username_field.text = "DEFAULT_USERNAME"
+            self.email_field.text = "DEFAULT"
+            self.contact_field.text = "DEFAULT"
 
     def edit_details(self, *args):
         self.name_field.disabled = False
         self.username_field.disabled = False
         self.email_field.disabled = False
         self.contact_field.disabled = False
-        # toast("Editing details...")
 
-    #Save new user details
     def save_details(self, *args):
         name = self.name_field.text
         username = self.username_field.text
@@ -113,13 +155,11 @@ class Account(MDScreen):
         # Email Validation
         if not email or "@" not in email:
             self.email_field.error = True
-            # toast("Invalid email address")
             return
 
-        #Contact validation
+        # Contact validation
         if not contact.isdigit() or len(contact) < 10:
             self.contact_field.error = True
-            # toast("Invalid contact number")
             return
 
         self.name_field.disabled = True
@@ -127,5 +167,21 @@ class Account(MDScreen):
         self.email_field.disabled = True
         self.contact_field.disabled = True
 
-        # toast("Details saved successfully")
+        # Save to database
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO users (name, username, email, contact)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(username) DO UPDATE SET
+                name=excluded.name,
+                email=excluded.email,
+                contact=excluded.contact
+            """,
+            (name, username, email, contact),
+        )
+        conn.commit()
+        conn.close()
+
         print(f"Details Saved:\nName: {name}\nUsername: {username}\nEmail: {email}\nContact: {contact}")
