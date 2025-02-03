@@ -26,7 +26,7 @@ class Services(MDApp):
             "food": "Order",
             "table-chair": "Reserve",
         }.items():
-            if tab_icon == "cart":
+            if tab_icon == "food":
                 self.root.ids.tabs.add_widget(
                     MDTabsItem(
                         MDTabsItemIcon(
@@ -48,10 +48,10 @@ class Services(MDApp):
                         ),
                     )
                 )
-            self.root.ids.tabs.switch_tab(text="Trips")
+            self.root.ids.tabs.switch_tab(text="Order")
 
     def build(self):
-        # self.theme_cls.primary_palette = "Red"
+        self.theme_cls.primary_palette = "Red"
         return Builder.load_string(KV)
 
 
