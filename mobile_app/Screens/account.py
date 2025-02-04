@@ -1,5 +1,6 @@
 import sqlite3
 import random
+import os
 from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.label import MDLabel
@@ -188,3 +189,4 @@ class Account(MDScreen):
         conn.close()
 
         print(f"Details Saved:\nName: {name}\nUsername: {username}\nEmail: {email}\nContact: {contact}")
+        print("Image exists:", os.path.exists("assets/images/profile_placeholder.jpg"))
