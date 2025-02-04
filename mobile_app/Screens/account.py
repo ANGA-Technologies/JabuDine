@@ -42,7 +42,6 @@ class Account(MDScreen):
             source="assets/images/profile_placeholder.jpg",
             size_hint=(None, None),
             size=(Window.width * 0.3, Window.width * 0.3), # Responsive size
-            size=(Window.width * 0.3, Window.width * 0.3),
             allow_stretch=True,
             keep_ratio=True  # Ensures proper scaling
         )
