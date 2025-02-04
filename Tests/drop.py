@@ -7,7 +7,7 @@ from kivymd.uix.menu import MDDropdownMenu
 KV = '''
 MDScreen:
 
-    MDRaisedButton:
+    MDButton:
         id: button
         text: "Press me"
         pos_hint: {"center_x": .5, "center_y": .5}

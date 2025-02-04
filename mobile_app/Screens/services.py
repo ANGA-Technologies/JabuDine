@@ -1,33 +1,37 @@
 from kivy.lang import Builder
 
 from kivymd.app import MDApp
+from kivy.uix.floatlayout import FloatLayout
+from kivymd.uix.divider import MDDivider
 from kivymd.uix.tab import (
+    MDTabsPrimary,
     MDTabsItem,
     MDTabsItemIcon,
     MDTabsItemText,
     MDTabsBadge,
 )
 
-KV = '''
-FloatLayout:
-    # md_bg_color: self.theme_cls.backgroundColor
-
-    MDTabsPrimary:
-        id: tabs
-        pos_hint: {"center_x": .5, "center_y": .95}
-
-        MDDivider:
-'''
-
-
 class Services(MDApp):
-    def on_start(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+        layout = FloatLayout()
+
+        layout.add_widget(
+            MDTabsPrimary(
+                id="tabs",
+                pos_hint={"center_x": .5, "center_y": .95},
+            ),
+            MDDivider(),
+        )
+
+
         for tab_icon, tab_name in {
             "food": "Order",
             "table-chair": "Reserve",
         }.items():
             if tab_icon == "food":
-                self.root.ids.tabs.add_widget(
+                self.root.tabs.add_widget(
                     MDTabsItem(
                         MDTabsItemIcon(
                             icon=tab_icon,
@@ -38,7 +42,7 @@ class Services(MDApp):
                     )
                 )
             else:
-                self.root.ids.tabs.add_widget(
+                self.root.tabs.add_widget(
                     MDTabsItem(
                         MDTabsItemIcon(
                             icon=tab_icon,
@@ -48,11 +52,6 @@ class Services(MDApp):
                         ),
                     )
                 )
-            self.root.ids.tabs.switch_tab(text="Order")
-
-    def build(self):
-        self.theme_cls.primary_palette = "Red"
-        return Builder.load_string(KV)
-
+            self.root.tabs.switch_tab(text="Order")
 
 Services().run()
