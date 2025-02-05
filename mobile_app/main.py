@@ -4,7 +4,7 @@ from Screens.alerts import Alerts  # Import from the screens folder
 from Screens.explore import Explore  # Import from the screens folder
 from Screens.menu import Menu  # Import from the screens folder
 from Screens.account import Account  # Import from the screens folder
-#from Screens.services import Services # Import from the screens folder
+from Screens.services import Services # Import from the screens folder
 
 from kivy.utils import get_color_from_hex
 from kivy.graphics import Color, Rectangle
@@ -78,9 +78,9 @@ class JabuDine(MDApp):
                     transition_progress = 12, 
                     transition_state = 'out',
                 ),
-                # Services(
-                #     name="Services",  # Use the imported Services screen
-                # ),
+                Services(
+                    name="Services",  # Use the imported Services screen
+                ),
                 transition=MDSwapTransition(),
                 # transition_axis = 'y',
                 id="screen_manager",

@@ -1,6 +1,4 @@
-from kivy.lang import Builder
-
-from kivymd.app import MDApp
+from kivymd.uix.screen import MDScreen
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.divider import MDDivider
 from kivymd.uix.tab import (
@@ -8,50 +6,38 @@ from kivymd.uix.tab import (
     MDTabsItem,
     MDTabsItemIcon,
     MDTabsItemText,
-    MDTabsBadge,
 )
 
-class Services(MDApp):
+class Services(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+        
+        # Build your screen layout
         layout = FloatLayout()
 
-        layout.add_widget(
-            MDTabsPrimary(
-                id="tabs",
-                pos_hint={"center_x": .5, "center_y": .95},
-            ),
-            MDDivider(),
+        # Create and add the tabs widget
+        self.tabs = MDTabsPrimary(
+            id="tabs",
+            pos_hint={"center_x": 0.5, "center_y": 0.95},
         )
-
-
+        layout.add_widget(self.tabs)
+        
+        # Optionally add a divider
+        layout.add_widget(MDDivider())
+        
+        # Add tabs
         for tab_icon, tab_name in {
             "food": "Order",
             "table-chair": "Reserve",
         }.items():
-            if tab_icon == "food":
-                self.root.tabs.add_widget(
-                    MDTabsItem(
-                        MDTabsItemIcon(
-                            icon=tab_icon,
-                        ),
-                        MDTabsItemText(
-                            text=tab_name,
-                        ),
-                    )
-                )
-            else:
-                self.root.tabs.add_widget(
-                    MDTabsItem(
-                        MDTabsItemIcon(
-                            icon=tab_icon,
-                        ),
-                        MDTabsItemText(
-                            text=tab_name,
-                        ),
-                    )
-                )
-            self.root.tabs.switch_tab(text="Order")
+            tab_item = MDTabsItem(
+                MDTabsItemIcon(icon=tab_icon),
+                MDTabsItemText(text=tab_name),
+            )
+            self.tabs.add_widget(tab_item)
+            
+        # Switch to the "Order" tab after all tabs are added
+        self.tabs.switch_tab(text="Order")
 
-Services().run()
+        # Add the layout to the screen
+        self.add_widget(layout)
