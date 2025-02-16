@@ -82,7 +82,6 @@ class JabuDine(MDApp):
                     name="Services",  # Use the imported Services screen
                 ),
                 transition=MDSwapTransition(),
-                # transition_axis = 'y',
                 id="screen_manager",
             ),
             MDNavigationBar(

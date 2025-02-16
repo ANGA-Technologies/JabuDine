@@ -120,6 +120,7 @@ class HomeScreen(MDScreen):
             shadow_color=get_color_from_hex("#492e00"),
             md_bg_color=get_color_from_hex("#ffffff"),
             style="elevated",
+            on_release=lambda x: self.open_page("Services")
         )
 
         # Add buttons to the layout

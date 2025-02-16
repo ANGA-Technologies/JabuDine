@@ -37,7 +37,7 @@ class Services(MDScreen):
             self.tabs.add_widget(tab_item)
             
         # Switch to the "Order" tab after all tabs are added
-        self.tabs.switch_tab(text="Order")
+        self.tabs.switch_tab(text="Reserve")
 
         # Add the layout to the screen
         self.add_widget(layout)
