@@ -105,7 +105,7 @@ class HomeScreen(MDScreen):
             shadow_color=get_color_from_hex("#492e00"),
             md_bg_color=get_color_from_hex("#ffffff"),
             style="elevated",
-            on_release=lambda x: self.open_page("Services")
+            on_release=lambda x: self.open_tab("Services", "Order")
         )
 
         # Reserve Button
@@ -120,7 +120,7 @@ class HomeScreen(MDScreen):
             shadow_color=get_color_from_hex("#492e00"),
             md_bg_color=get_color_from_hex("#ffffff"),
             style="elevated",
-            on_release=lambda x: self.open_page("Services")
+            on_release=lambda x: self.open_tab("Services", "Reserve")
         )
 
         # Add buttons to the layout
@@ -255,6 +255,24 @@ class HomeScreen(MDScreen):
     def open_explore_page(self, *args):
         app = MDApp.get_running_app()
         app.switch_to_screen("Explore")
+
+    def open_tab(self, screen_name, selected_tab="Order"):
+        """Callback to open the specified page with a specific tab."""
+        app = MDApp.get_running_app()
+
+        # Access the screen manager correctly
+        screen_manager = app.root.get_ids().screen_manager  
+
+        # Get the Services screen
+        services_screen = screen_manager.get_screen("Services")
+        
+        # Update the selected tab
+        services_screen.selected_tab = selected_tab  
+        services_screen.switch_to_selected_tab()  
+
+        # Switch to the Services screen
+        app.switch_to_screen(screen_name)
+
 
 
     def open_page(self, screen_name):

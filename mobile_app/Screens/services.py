@@ -9,8 +9,9 @@ from kivymd.uix.tab import (
 )
 
 class Services(MDScreen):
-    def __init__(self, **kwargs):
+    def __init__(self, selected_tab="Order", **kwargs):
         super().__init__(**kwargs)
+        self.selected_tab = selected_tab  # Store the selected tab
         
         # Build your screen layout
         layout = FloatLayout()
@@ -25,6 +26,9 @@ class Services(MDScreen):
         # Optionally add a divider
         layout.add_widget(MDDivider())
         
+        # Dictionary to store tab items
+        self.tab_items = {}
+
         # Add tabs
         for tab_icon, tab_name in {
             "food": "Order",
@@ -35,9 +39,15 @@ class Services(MDScreen):
                 MDTabsItemText(text=tab_name),
             )
             self.tabs.add_widget(tab_item)
+            self.tab_items[tab_name] = tab_item  # Store tab reference
             
-        # Switch to the "Order" tab after all tabs are added
-        self.tabs.switch_tab(text="Reserve")
+        # Switch to the specified tab
+        self.switch_to_selected_tab()
 
         # Add the layout to the screen
-        self.add_widget(layout)
+        self.add_widget(layout) 
+
+    def switch_to_selected_tab(self):
+        """Switch to the tab that was requested."""
+        if self.selected_tab in self.tab_items:
+            self.tabs.switch_tab(self.selected_tab)
