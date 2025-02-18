@@ -12,7 +12,7 @@ class Services(MDScreen):
     def __init__(self, selected_tab="Order", **kwargs):
         super().__init__(**kwargs)
         self.selected_tab = selected_tab  # Store the selected tab
-        
+
         # Build your screen layout
         layout = FloatLayout()
 
@@ -22,11 +22,11 @@ class Services(MDScreen):
             pos_hint={"center_x": 0.5, "center_y": 0.95},
         )
         layout.add_widget(self.tabs)
-        
-        # add a divider
+
+        # Optionally add a divider
         divider = MDDivider(pos_hint={"center_x": 0.5, "center_y": 0.88})
         layout.add_widget(divider)
-        
+
         # Dictionary to store tab items
         self.tab_items = {}
 
@@ -41,7 +41,7 @@ class Services(MDScreen):
             )
             self.tabs.add_widget(tab_item)
             self.tab_items[tab_name] = tab_item  # Store tab reference
-            
+
         # Switch to the specified tab
         self.switch_to_selected_tab()
 
@@ -51,4 +51,4 @@ class Services(MDScreen):
     def switch_to_selected_tab(self):
         """Switch to the tab that was requested."""
         if self.selected_tab in self.tab_items:
-            self.tabs.switch_tab(self.selected_tab)
+            self.tabs.switch_tab(self.tab_items[self.selected_tab])
