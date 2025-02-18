@@ -23,8 +23,9 @@ class Services(MDScreen):
         )
         layout.add_widget(self.tabs)
         
-        # Optionally add a divider
-        layout.add_widget(MDDivider())
+        # add a divider
+        divider = MDDivider(pos_hint={"center_x": 0.5, "center_y": 0.88})
+        layout.add_widget(divider)
         
         # Dictionary to store tab items
         self.tab_items = {}
