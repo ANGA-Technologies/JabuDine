@@ -2,10 +2,7 @@ from kivymd.uix.screen import MDScreen
 from kivy.metrics import dp
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.divider import MDDivider
-from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.label import MDLabel
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
 from kivymd.uix.tab import (
     MDTabsPrimary,
     MDTabsItem,
@@ -13,6 +10,7 @@ from kivymd.uix.tab import (
     MDTabsItemText,
     MDTabsCarousel
 )
+
 
 class Services(MDScreen):
     def __init__(self, selected_tab="Reserve", **kwargs):
@@ -55,6 +53,8 @@ class Services(MDScreen):
             )
             self.tabs.add_widget(tab_item)
             self.tab_items[tab_name] = tab_item  # Store tab reference
+
+            # Create and store content related to the tab
             content = MDLabel(
                 text=f"{tab_name} Content",
                 halign="center",
@@ -62,24 +62,42 @@ class Services(MDScreen):
             )
             self.related_content_container.add_widget(content)
 
+        # Bind the on_tab_switch event to the handler
+        self.tabs.bind(on_tab_switch=self.on_tab_switch)
+
         # Switch to the specified tab
         self.switch_to_selected_tab()
 
         # Add the layout to the screen
-        self.add_widget(layout) 
+        self.add_widget(layout)
+
+    def on_tab_switch(self, instance_tabs, instance_tab, instance_tabs_label, *args):
+        """Update the carousel based on the selected tab."""
+
+        # Retrieve the tab text properly
+        tab_text = None
+        for child in instance_tab.children:
+            if isinstance(child, MDTabsItemText):
+                tab_text = child.text
+                break
+
+        if not tab_text:
+            return  # Safety check to prevent crashes
+
+        if tab_text in self.tab_items:
+            tab_index = list(self.tab_items.keys()).index(tab_text)
+            self.related_content_container.load_slide(
+                self.related_content_container.slides[tab_index]
+            )
 
     def switch_to_selected_tab(self):
         """Switch to the tab that was requested."""
         if self.selected_tab in self.tab_items:
             self.tabs.switch_tab(self.tab_items[self.selected_tab])
-            if self.selected_tab == "Order":
-                self.related_content_container.load_slide(
-                    self.related_content_container.slides[0]
-                )
-            elif self.selected_tab == "Reserve":
-                self.related_content_container.load_slide(
-                    self.related_content_container.slides[1]
-                )
-            else:
-                raise ValueError("Invalid tab name")
-            
+            self.on_tab_switch(
+                self.tabs,
+                self.tab_items[self.selected_tab],
+                self.tab_items[self.selected_tab]
+            )
+        else:
+            raise ValueError("Invalid tab name")
