@@ -15,7 +15,7 @@ from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.boxlayout import MDBoxLayout
 # from kivy.uix.screenmanager import FadeTransition
-from kivymd.uix.transition import MDSwapTransition, MDSharedAxisTransition, MDFadeSlideTransition
+from kivymd.uix.transition import MDSwapTransition, MDSharedAxisTransition, MDFadeSlideTransition, MDSlideTransition
 from kivymd.uix.navigationbar import (
     MDNavigationBar,
     MDNavigationItem,
@@ -81,7 +81,8 @@ class JabuDine(MDApp):
                 Services(
                     name="Services",  # Use the imported Services screen
                 ),
-                transition=MDSwapTransition(),
+                # transition=MDSwapTransition(),
+                transition=MDSlideTransition(duration=0.3, direction="left"),
                 id="screen_manager",
             ),
             MDNavigationBar(
